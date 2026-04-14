@@ -140,7 +140,7 @@ const flows = {
     text: '楽天設定の何について知りたいですか？',
     choices: [
       { label: 'ポイント変倍設定', next: 'item_ポイント変倍設定' },
-      { label: 'キャッシュバックキャンペーン設定', next: 'wip', wip: true },
+      { label: 'キャッシュバックキャンペーン設定', next: 'item_キャッシュバックキャンペーン設定' },
       { label: 'クーポン設定', next: 'wip', wip: true },
       { label: 'LINE配信', next: 'wip', wip: true },
       { label: 'バックオフィスに戻る', next: 'dept_バックオフィス', back: true }
@@ -148,6 +148,13 @@ const flows = {
   },
   item_ポイント変倍設定: {
     get html() { return ml('https://www.canva.com/design/DAHDm-nWrtE/eRfp7UqE5-Iet4ES_qkNfQ/view', 'ポイント変倍設定マニュアルを開く') + canvaEmbed('https://www.canva.com/design/DAHDm-nWrtE/eRfp7UqE5-Iet4ES_qkNfQ/view?embed'); },
+    choices: [
+      { label: '楽天設定に戻る', next: 'cat_バックオフィス_楽天設定', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_キャッシュバックキャンペーン設定: {
+    get html() { return ml('https://www.canva.com/design/DAHCSHIjk9M/fQQDy9H-LjUixImG11bDfg/view', 'キャッシュバックキャンペーン設定マニュアルを開く') + canvaEmbed('https://www.canva.com/design/DAHCSHIjk9M/fQQDy9H-LjUixImG11bDfg/view?embed'); },
     choices: [
       { label: '楽天設定に戻る', next: 'cat_バックオフィス_楽天設定', back: true },
       { label: '最初に戻る', next: 'start', back: true }
