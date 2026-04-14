@@ -304,23 +304,36 @@ function showFlow(key) {
   },600);
 }
 
-function handleSend() {
+const GAS_PROXY = 'https://script.google.com/macros/s/AKfycbxMuSgsGyN2eCZqYqzEGiCwGaR-6XwUFLl7xeD2fUqeBj1Na9vbdZzrjFbhcVm7hieK/exec';
+let conversationId = '';
+
+async function handleSend() {
   const text=input.value.trim(); if(!text) return;
   addUserMsg(text); input.value='';
   showTyping();
-  setTimeout(()=>{
+  try {
+    const res = await fetch(GAS_PROXY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ query: text, conversation_id: conversationId })
+    });
+    const data = await res.json();
+    conversationId = data.conversation_id || '';
     removeTyping();
     const row=document.createElement('div'); row.className='msg-row bot';
     const av=document.createElement('div'); av.className='avatar bot'; av.textContent='KB';
     const b=document.createElement('div'); b.className='bubble bot'; b.style.whiteSpace='pre-line';
-    b.textContent='ご質問ありがとうございます。\n担当者がナレッジを確認・更新いたします。\n\nお急ぎの場合は担当部署に直接お問い合わせください。';
+    b.textContent = data.answer || 'エラーが発生しました。';
     const choicesEl=document.createElement('div'); choicesEl.className='choices';
     const btn=document.createElement('button'); btn.className='choice-btn';
     btn.innerHTML='<span class="num back">←</span>最初に戻る';
     btn.addEventListener('click',()=>{ addUserMsg('最初に戻る'); showFlow('start'); });
     choicesEl.appendChild(btn); b.appendChild(choicesEl);
     row.appendChild(av); row.appendChild(b); messagesEl.appendChild(row); scrollBottom();
-  },800);
+  } catch(err) {
+    removeTyping();
+    console.error(err);
+  }
 }
 
 sendBtn.addEventListener('click', handleSend);
