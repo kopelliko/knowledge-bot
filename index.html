@@ -30,9 +30,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-ser
 .canva-wrap { margin-top: 12px; border-radius: 8px; overflow: hidden; position: relative; width: 100%; height: 0; padding-top: 56.25%; box-shadow: 0 2px 8px rgba(63,69,81,0.16); }
 .canva-wrap iframe { position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; }
 .canva-note { font-size: 12px; color: #888; margin-top: 6px; }
-.step-list { margin: 8px 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
-.step-list li { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; }
-.step-num { width: 24px; height: 24px; border-radius: 50%; background: #1D9E75; color: white; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex-shrink: 0; margin-top: 1px; }
 .choices { display: flex; flex-direction: column; gap: 7px; margin-top: 12px; }
 .choice-btn { background: #f8f8f4; border: 0.5px solid #ddddd5; border-radius: 10px; padding: 10px 14px; font-size: 13px; color: #1a1a1a; cursor: pointer; text-align: left; transition: background 0.15s, border-color 0.15s; display: flex; align-items: center; gap: 8px; font-family: inherit; }
 .choice-btn:hover { background: #eef8f4; border-color: #1D9E75; }
@@ -140,71 +137,22 @@ const flows = {
   cat_B_O_楽天設定: {
     text: '楽天設定の何について知りたいですか？',
     choices: [
-      { label: 'ポイント変倍設定', next: 'item_ポイント変倍設定' },
+      { label: 'ポイント変倍設定', next: 'wip', wip: true },
       { label: 'キャッシュバックキャンペーン設定', next: 'wip', wip: true },
       { label: 'クーポン設定', next: 'wip', wip: true },
       { label: 'B.Oに戻る', next: 'dept_B_O', back: true }
     ]
   },
-  item_ポイント変倍設定: {
-    get html() { return canvaEmbed('<div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%;
- padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
- border-radius: 8px; will-change: transform;">
-  <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-    src="https://www.canva.com/design/DAHDm-nWrtE/eRfp7UqE5-Iet4ES_qkNfQ/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
-  </iframe>
-</div>
-豊島 浩太さんによる<a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAHDm-nWrtE&#x2F;eRfp7UqE5-Iet4ES_qkNfQ&#x2F;view?utm_content=DAHDm-nWrtE&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">【楽天】ポイント変倍の設定</a>'); },
-    choices: [
-      { label: '楽天設定に戻る', next: 'cat_B_O_楽天設定', back: true },
-      { label: '最初に戻る', next: 'start', back: true }
-    ]
-  },
   cat_B_O_ヤフショ設定: {
     text: 'ヤフショ設定の何について知りたいですか？',
     choices: [
-      { label: 'ボーナスストア', next: 'item_ボーナスストア' },
-      { label: 'LINE配信', next: 'item_LINE配信' },
-      { label: 'クーポン', next: 'item_クーポン' },
+      { label: 'ボーナスストア', next: 'wip', wip: true },
+      { label: 'LINE配信', next: 'wip', wip: true },
+      { label: 'クーポン', next: 'wip', wip: true },
       { label: '爆買いWEEK', next: 'wip', wip: true },
       { label: 'あなただけのタイムセール', next: 'wip', wip: true },
       { label: '広告のブースト', next: 'wip', wip: true },
       { label: 'B.Oに戻る', next: 'dept_B_O', back: true }
-    ]
-  },
-  item_ボーナスストア: {
-    get html() { return ml('https://canva.link/dyu5a2bzy5iodfi', 'ボーナスストアマニュアルを開く') + canvaEmbed('<div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%;
- padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
- border-radius: 8px; will-change: transform;">
-  <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-    src="https://www.canva.com/design/DAHBKNpKxMg/LI4UkYGyrV4JL-EZ4H-2Sg/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
-  </iframe>
-</div>
-豊島 浩太さんによる<a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAHBKNpKxMg&#x2F;LI4UkYGyrV4JL-EZ4H-2Sg&#x2F;view?utm_content=DAHBKNpKxMg&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">【ヤフショ】ボーナスストアへの参加</a>'); },
-    choices: [
-      { label: 'ヤフショ設定に戻る', next: 'cat_B_O_ヤフショ設定', back: true },
-      { label: '最初に戻る', next: 'start', back: true }
-    ]
-  },
-  item_LINE配信: {
-    get html() { return canvaEmbed('<div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%;
- padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
- border-radius: 8px; will-change: transform;">
-  <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-    src="https://www.canva.com/design/DAHBR9YM2JY/FSE1zLlV5Gbhrt-wasYD-w/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
-  </iframe>
-</div>
-豊島 浩太さんによる<a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAHBR9YM2JY&#x2F;FSE1zLlV5Gbhrt-wasYD-w&#x2F;view?utm_content=DAHBR9YM2JY&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">【ヤフショ】LINE配信設定</a>'); },
-    choices: [
-      { label: 'ヤフショ設定に戻る', next: 'cat_B_O_ヤフショ設定', back: true },
-      { label: '最初に戻る', next: 'start', back: true }
-    ]
-  },
-  item_クーポン: {
-    get html() { return ml('https://canva.link/628tl4m1o1hf2cd', 'クーポンマニュアルを開く'); },
-    choices: [
-      { label: 'ヤフショ設定に戻る', next: 'cat_B_O_ヤフショ設定', back: true },
-      { label: '最初に戻る', next: 'start', back: true }
     ]
   },
   cat_B_O_楽天_ヤフショ共通: {
@@ -256,9 +204,9 @@ const sendBtn = document.getElementById('send-btn');
 const scrollBottom = () => messagesEl.scrollTop = messagesEl.scrollHeight;
 
 function showTyping() {
-  const row = document.createElement('div'); row.className='msg-row bot'; row.id='typing-row';
-  const av = document.createElement('div'); av.className='avatar bot'; av.textContent='KB';
-  const b = document.createElement('div'); b.className='bubble bot';
+  const row=document.createElement('div'); row.className='msg-row bot'; row.id='typing-row';
+  const av=document.createElement('div'); av.className='avatar bot'; av.textContent='KB';
+  const b=document.createElement('div'); b.className='bubble bot';
   b.innerHTML='<div class="typing"><span></span><span></span><span></span></div>';
   row.appendChild(av); row.appendChild(b); messagesEl.appendChild(row); scrollBottom();
 }
@@ -273,25 +221,25 @@ function addUserMsg(text) {
 
 function makeChoices(flow, b) {
   if (!flow.choices || !flow.choices.length) return;
-  const choicesEl = document.createElement('div'); choicesEl.className='choices';
-  flow.choices.forEach((c, i) => {
-    const btn = document.createElement('button');
+  const choicesEl=document.createElement('div'); choicesEl.className='choices';
+  flow.choices.forEach((c,i) => {
+    const btn=document.createElement('button');
     if (c.wip) {
       btn.className='choice-btn';
-      btn.innerHTML='<span class="num">'+( i+1)+'</span>'+c.label+'<span class="badge-wip">準備中</span>';
-      btn.addEventListener('click', () => { addUserMsg(c.label); showFlow('wip'); });
+      btn.innerHTML='<span class="num">'+(i+1)+'</span>'+c.label+'<span class="badge-wip">準備中</span>';
+      btn.addEventListener('click',()=>{ addUserMsg(c.label); showFlow('wip'); });
     } else if (c.free) {
       btn.className='choice-btn free';
       btn.innerHTML='<span class="num free-icon">✎</span>'+c.label;
-      btn.addEventListener('click', () => { addUserMsg(c.label); showFlow('free_input'); setTimeout(()=>input.focus(),700); });
+      btn.addEventListener('click',()=>{ addUserMsg(c.label); showFlow('free_input'); setTimeout(()=>input.focus(),700); });
     } else if (c.back) {
       btn.className='choice-btn';
       btn.innerHTML='<span class="num back">←</span>'+c.label;
-      btn.addEventListener('click', () => { addUserMsg(c.label); showFlow(c.next); });
+      btn.addEventListener('click',()=>{ addUserMsg(c.label); showFlow(c.next); });
     } else {
       btn.className='choice-btn';
       btn.innerHTML='<span class="num">'+(i+1)+'</span>'+c.label;
-      btn.addEventListener('click', () => { addUserMsg(c.label); showFlow(c.next); });
+      btn.addEventListener('click',()=>{ addUserMsg(c.label); showFlow(c.next); });
     }
     choicesEl.appendChild(btn);
   });
@@ -299,25 +247,25 @@ function makeChoices(flow, b) {
 }
 
 function showFlow(key) {
-  const flow = flows[key]; if (!flow) return;
+  const flow=flows[key]; if(!flow) return;
   showTyping();
-  setTimeout(() => {
+  setTimeout(()=>{
     removeTyping();
     const row=document.createElement('div'); row.className='msg-row bot';
     const av=document.createElement('div'); av.className='avatar bot'; av.textContent='KB';
     const b=document.createElement('div'); b.className='bubble bot';
-    if (flow.html) { b.innerHTML=flow.html; }
-    else { b.style.whiteSpace='pre-line'; b.textContent=flow.text; }
-    makeChoices(flow, b);
+    if(flow.html){ b.innerHTML=flow.html; }
+    else{ b.style.whiteSpace='pre-line'; b.textContent=flow.text; }
+    makeChoices(flow,b);
     row.appendChild(av); row.appendChild(b); messagesEl.appendChild(row); scrollBottom();
-  }, 600);
+  },600);
 }
 
 function handleSend() {
   const text=input.value.trim(); if(!text) return;
   addUserMsg(text); input.value='';
   showTyping();
-  setTimeout(() => {
+  setTimeout(()=>{
     removeTyping();
     const row=document.createElement('div'); row.className='msg-row bot';
     const av=document.createElement('div'); av.className='avatar bot'; av.textContent='KB';
@@ -326,10 +274,10 @@ function handleSend() {
     const choicesEl=document.createElement('div'); choicesEl.className='choices';
     const btn=document.createElement('button'); btn.className='choice-btn';
     btn.innerHTML='<span class="num back">←</span>最初に戻る';
-    btn.addEventListener('click', ()=>{ addUserMsg('最初に戻る'); showFlow('start'); });
+    btn.addEventListener('click',()=>{ addUserMsg('最初に戻る'); showFlow('start'); });
     choicesEl.appendChild(btn); b.appendChild(choicesEl);
     row.appendChild(av); row.appendChild(b); messagesEl.appendChild(row); scrollBottom();
-  }, 800);
+  },800);
 }
 
 sendBtn.addEventListener('click', handleSend);
