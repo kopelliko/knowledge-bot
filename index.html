@@ -137,10 +137,17 @@ const flows = {
   cat_B_O_楽天設定: {
     text: '楽天設定の何について知りたいですか？',
     choices: [
-      { label: 'ポイント変倍設定', next: 'wip', wip: true },
+      { label: 'ポイント変倍設定', next: 'item_ポイント変倍設定' },
       { label: 'キャッシュバックキャンペーン設定', next: 'wip', wip: true },
       { label: 'クーポン設定', next: 'wip', wip: true },
       { label: 'B.Oに戻る', next: 'dept_B_O', back: true }
+    ]
+  },
+  item_ポイント変倍設定: {
+    get html() { return ml('https://www.canva.com/design/DAHDm-nWrtE/eRfp7UqE5-Iet4ES_qkNfQ/view', 'ポイント変倍設定マニュアルを開く') + canvaEmbed('https://www.canva.com/design/DAHDm-nWrtE/eRfp7UqE5-Iet4ES_qkNfQ/view?embed'); },
+    choices: [
+      { label: '楽天設定に戻る', next: 'cat_B_O_楽天設定', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
     ]
   },
   cat_B_O_ヤフショ設定: {
