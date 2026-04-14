@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>社内ナレッジBot</title>
+<link rel="manifest" href="#" />
+<meta name="theme-color" content="#1D9E75">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', sans-serif; background: #f5f5f0; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 16px; }
+#chat-wrap { display: flex; flex-direction: column; width: 100%; max-width: 680px; height: 90vh; max-height: 800px; background: #f5f5f0; border-radius: 16px; overflow: hidden; border: 0.5px solid #e0e0d8; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+#chat-header { background: #ffffff; border-bottom: 0.5px solid #e0e0d8; padding: 14px 20px; display: flex; align-items: center; gap: 10px; }
+.bot-avatar { width: 36px; height: 36px; border-radius: 50%; background: #1D9E75; display: flex; align-items: center; justify-content: center; font-size: 14px; color: white; font-weight: 600; flex-shrink: 0; }
+.bot-name { font-size: 15px; font-weight: 600; color: #1a1a1a; }
+.bot-status { font-size: 12px; color: #888; display: flex; align-items: center; gap: 4px; }
+.bot-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #1D9E75; display: inline-block; }
+#messages { flex: 1; overflow-y: auto; padding: 20px 16px; display: flex; flex-direction: column; gap: 16px; }
+#messages::-webkit-scrollbar { width: 4px; }
+#messages::-webkit-scrollbar-track { background: transparent; }
+#messages::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
+.msg-row { display: flex; gap: 8px; align-items: flex-start; }
+.msg-row.user { flex-direction: row-reverse; }
+.avatar { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex-shrink: 0; margin-top: 2px; }
+.avatar.bot { background: #1D9E75; color: white; }
+.avatar.user { background: #e8f0fe; color: #2a6fdb; }
+.bubble { max-width: 82%; padding: 10px 14px; font-size: 14px; line-height: 1.75; color: #1a1a1a; }
+.bubble.bot { background: #ffffff; border: 0.5px solid #e8e8e0; border-radius: 4px 16px 16px 16px; }
+.bubble.user { background: #1D9E75; color: white; border-radius: 16px 4px 16px 16px; }
+.manual-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; background: #E1F5EE; border: 0.5px solid #5DCAA5; border-radius: 8px; padding: 7px 12px; font-size: 13px; font-weight: 500; color: #0F6E56; text-decoration: none; transition: background 0.15s; }
+.manual-link:hover { background: #9FE1CB; }
+.manual-link svg { width: 14px; height: 14px; fill: #0F6E56; flex-shrink: 0; }
+.canva-wrap { margin-top: 12px; border-radius: 8px; overflow: hidden; position: relative; width: 100%; height: 0; padding-top: 56.25%; box-shadow: 0 2px 8px rgba(63,69,81,0.16); }
+.canva-wrap iframe { position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; }
+.canva-note { font-size: 12px; color: #888; margin-top: 6px; }
+.step-list { margin: 8px 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.step-list li { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; }
+.step-num { width: 24px; height: 24px; border-radius: 50%; background: #1D9E75; color: white; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex-shrink: 0; margin-top: 1px; }
+.step-text { flex: 1; line-height: 1.7; }
+.step-text strong { font-weight: 600; color: #0F6E56; }
+.choices { display: flex; flex-direction: column; gap: 7px; margin-top: 12px; }
+.choice-btn { background: #f8f8f4; border: 0.5px solid #ddddd5; border-radius: 10px; padding: 10px 14px; font-size: 13px; color: #1a1a1a; cursor: pointer; text-align: left; transition: background 0.15s, border-color 0.15s; display: flex; align-items: center; gap: 8px; font-family: inherit; }
+.choice-btn:hover { background: #eef8f4; border-color: #1D9E75; }
+.choice-btn.free { border-style: dashed; color: #666; }
+.choice-btn.free:hover { border-color: #1D9E75; color: #1a1a1a; }
+.badge-wip { margin-left: auto; font-size: 10px; padding: 2px 7px; background: #fff8e6; color: #b07d00; border-radius: 99px; white-space: nowrap; border: 0.5px solid #f0d080; }
+.num { width: 22px; height: 22px; border-radius: 50%; background: #E1F5EE; color: #0F6E56; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex-shrink: 0; }
+.num.back { background: #f0f0ec; color: #888; }
+.num.free-icon { background: #f0f0ec; color: #888; font-size: 15px; }
+.typing { display: flex; gap: 4px; align-items: center; padding: 4px 0; }
+.typing span { width: 6px; height: 6px; border-radius: 50%; background: #aaa; animation: bounce 1.2s infinite; }
+.typing span:nth-child(2) { animation-delay: 0.2s; }
+.typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes bounce { 0%,60%,100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-6px); opacity: 1; } }
+#input-area { background: #ffffff; border-top: 0.5px solid #e0e0d8; padding: 12px 16px; display: flex; gap: 8px; align-items: flex-end; }
+#user-input { flex: 1; border: 0.5px solid #ddddd5; border-radius: 20px; padding: 9px 16px; font-size: 14px; resize: none; min-height: 40px; max-height: 100px; color: #1a1a1a; background: #f8f8f4; font-family: inherit; outline: none; transition: border-color 0.15s; }
+#user-input:focus { border-color: #1D9E75; }
+#user-input::placeholder { color: #bbb; }
+#send-btn { width: 40px; height: 40px; border-radius: 50%; background: #1D9E75; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+#send-btn:hover { background: #0F6E56; }
+#send-btn svg { width: 17px; height: 17px; fill: white; }
+
+@media (max-width: 480px) {
+  body { padding: 0; }
+  #chat-wrap { height: 100vh; max-height: 100vh; border-radius: 0; border: none; }
+}
+</style>
+</head>
+<body>
+<div id="chat-wrap">
+  <div id="chat-header">
+    <div class="bot-avatar">KB</div>
+    <div>
+      <div class="bot-name">社内ナレッジBot</div>
+      <div class="bot-status">オンライン</div>
+    </div>
+  </div>
+  <div id="messages"></div>
+  <div id="input-area">
+    <textarea id="user-input" placeholder="質問を直接入力..." rows="1"></textarea>
+    <button id="send-btn"><svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg></button>
+  </div>
+</div>
+
+<script>
+const LSVG = `<svg viewBox="0 0 24 24"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42L17.59 5H14V3zm-1 3H5a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-8h-2v8H5V8h8V6z"/></svg>`;
+const ml = (url, label) => `<a class="manual-link" href="${url}" target="_blank">${LSVG}${label}</a>`;
+const CANVA_COUPON = `<div class="canva-wrap"><iframe loading="lazy" src="https://www.canva.com/design/DAHBRAcJK9M/NY42A9ixpWtGxeyX8CW2sw/view?embed" allowfullscreen allow="fullscreen"></iframe></div><p class="canva-note">スライドをスクロールして該当ページをご確認ください</p>`;
+
+function stepsHtml(steps) {
+  return '<ul class="step-list">' + steps.map((s, i) =>
+    `<li><span class="step-num">${i+1}</span><span class="step-text">${s}</span></li>`
+  ).join('') + '</ul>';
+}
+
+const flows = {
+  start: {
+    text: 'こんにちは！\n何について調べますか？',
+    choices: [
+      { label: '納品', next: 'delivery' },
+      { label: 'バックオフィス', next: 'backoffice' },
+      { label: '発送', next: 'shipping' },
+      { label: '国内営業', next: 'domestic', wip: true },
+      { label: '海外営業', next: 'wip_dept', wip: true },
+      { label: 'その他・一般（社内ルールなど）', next: 'wip_dept', wip: true },
+      { label: '自由に質問する', next: 'free_input', free: true }
+    ]
+  },
+  delivery: {
+    text: '納品の何について知りたいですか？',
+    choices: [
+      { label: '納品作業', next: 'wip' },
+      { label: '納品後のパソコン作業', next: 'wip' },
+      { label: '在庫管理シールの使い方', next: 'wip' },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  backoffice: {
+    text: 'バックオフィスの何について知りたいですか？',
+    choices: [
+      { label: '楽天設定', next: 'bo_rakuten' },
+      { label: 'ヤフショ設定', next: 'bo_yahoo' },
+      { label: '楽天/ヤフショ共通', next: 'bo_common' },
+      { label: '出品作業', next: 'bo_listing' },
+      { label: 'クロスモール', next: 'bo_crossmall' },
+      { label: 'その他', next: 'bo_other' },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  bo_rakuten: {
+    text: '楽天設定の何について知りたいですか？',
+    choices: [
+      { label: 'ポイント変倍設定', next: 'wip' },
+      { label: 'キャッシュバックキャンペーン設定', next: 'wip' },
+      { label: 'クーポン設定', next: 'wip' },
+      { label: 'バックオフィスに戻る', next: 'backoffice', back: true }
+    ]
+  },
+  bo_yahoo: {
+    text: 'ヤフショ設定の何について知りたいですか？',
+    choices: [
+      { label: 'ボーナスストア', next: 'wip' },
+      { label: 'LINE配信', next: 'wip' },
+      { label: 'クーポン', next: 'yahoo_coupon' },
+      { label: '爆買いWEEK', next: 'wip' },
+      { label: 'あなただけのタイムセール', next: 'wip' },
+      { label: '広告のブースト', next: 'wip' },
+      { label: 'バックオフィスに戻る', next: 'backoffice', back: true }
+    ]
+  },
+  bo_common: {
+    text: '楽天/ヤフショ共通の何について知りたいですか？',
+    choices: [
+      { label: 'LINEお友達追加クーポン', next: 'wip' },
+      { label: 'バックオフィスに戻る', next: 'backoffice', back: true }
+    ]
+  },
+  bo_listing: {
+    text: '出品作業のどのステップですか？',
+    choices: [
+      { label: '手順① 商品のバリエーションの決定', next: 'wip' },
+      { label: '手順② 棚・棚番の作成', next: 'wip' },
+      { label: '手順③ 出品登録の準備', next: 'wip' },
+      { label: '手順④ 商品画像作成', next: 'wip' },
+      { label: '手順⑤ 出品登録', next: 'wip' },
+      { label: '手順⑥ 在庫連動の設定', next: 'wip' },
+      { label: '手順⑦ 広告の除外', next: 'wip' },
+      { label: '手順⑧ 最終確認', next: 'wip' },
+      { label: 'バックオフィスに戻る', next: 'backoffice', back: true }
+    ]
+  },
+  bo_crossmall: {
+    text: 'クロスモールの何について知りたいですか？',
+    choices: [
+      { label: '当日の注文キャンセル方法', next: 'wip' },
+      { label: 'バックオフィスに戻る', next: 'backoffice', back: true }
+    ]
+  },
+  bo_other: {
+    text: 'その他の何について知りたいですか？',
+    choices: [
+      { label: '不正注文の取り戻し請求', next: 'wip' },
+      { label: 'バックオフィスに戻る', next: 'backoffice', back: true }
+    ]
+  },
+  shipping: {
+    text: '発送の何について知りたいですか？',
+    choices: [
+      { label: '発送業務', next: 'shipping_work' },
+      { label: 'ラクマ出品', next: 'shipping_rakuma' },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  shipping_work: {
+    text: '発送業務のどのステップですか？',
+    choices: [
+      { label: '梱包作業前の作業', next: 'wip' },
+      { label: '梱包作業（スムースEC）', next: 'wip' },
+      { label: '梱包後の作業', next: 'wip' },
+      { label: '発送に戻る', next: 'shipping', back: true }
+    ]
+  },
+  shipping_rakuma: {
+    text: 'ラクマ出品の何について知りたいですか？',
+    choices: [
+      { label: '出品方法', next: 'wip' },
+      { label: '値付け方法', next: 'wip' },
+      { label: '発送方法', next: 'wip' },
+      { label: '発送に戻る', next: 'shipping', back: true }
+    ]
+  },
+  domestic: {
+    text: '国内営業の何について知りたいですか？',
+    choices: [
+      { label: 'ヤフショの操作', next: 'yahoo' },
+      { label: '楽天の操作', next: 'wip' },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  yahoo: {
+    text: 'ヤフショの何について知りたいですか？',
+    choices: [
+      { label: 'クーポン設定', next: 'yahoo_coupon' },
+      { label: '商品登録・管理', next: 'wip' },
+      { label: '国内営業に戻る', next: 'domestic', back: true }
+    ]
+  },
+  yahoo_coupon: {
+    text: 'クーポンの何を知りたいですか？',
+    choices: [
+      { label: '新規でクーポンを発行する方法', next: 'answer_new' },
+      { label: '既存クーポンを複製する方法', next: 'answer_copy' },
+      { label: '一括定期クーポンの設定方法', next: 'answer_bulk' },
+      { label: 'クーポンの種類を知りたい', next: 'answer_types' },
+      { label: '戻る', next: 'bo_yahoo', back: true }
+    ]
+  },
+  answer_new: {
+    html: `<p style="margin-bottom:10px;">ヤフショで店舗クーポンを新規発行する手順です。<br>以下のステップで進めてください。</p>` +
+      stepsHtml([
+        `ストアクリエイタープロにログインし、<strong>集客・販促 → クーポン → クーポン設定</strong> を開く`,
+        `「<strong>新規発行</strong>」ボタンをクリックする`,
+        `<strong>クーポン名</strong>（例：商品指定クーポン(〇〇円OFF)何度でも使用可能）と<strong>説明文</strong>を入力する`,
+        `クーポンのカテゴリは必ず「<strong>その他</strong>」を選択する`,
+        `値引きは<strong>定額値引き</strong>を選択し、スプレッドシートの割引率を入力する`,
+        `公開範囲は必ず「<strong>表示</strong>」を選択する（非表示にするとお客様に見えません）`,
+        `対象商品の<strong>商品管理番号</strong>を入力し、確認ボタンを押して完了`
+      ]) +
+      `<p style="margin-top:10px;font-size:13px;color:#888;">詳細は下記マニュアルの <strong style="color:#0F6E56;">8〜19ページ</strong> をご確認ください。</p>` +
+      CANVA_COUPON,
+    choices: [
+      { label: '複製の方法も知りたい', next: 'answer_copy' },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  answer_copy: {
+    html: `<p style="margin-bottom:10px;">既存のクーポンをコピーして翌月分を設定する手順です。</p>` +
+      stepsHtml([
+        `イベントカレンダーシートから<strong>コピーしたいクーポン名</strong>をコピーする`,
+        `ストアクリエイタープロのクーポン一覧画面で <strong>⌘F（コマンドF）</strong> で検索する`,
+        `一致するクーポンの右にある「<strong>コピー</strong>」ボタンをクリックする`,
+        `公開期間を<strong>翌月1日〜月末</strong>に設定する（例：2月作業なら3月1日〜3月31日）`,
+        `スプレッドシートで<strong>赤文字になっている商品のみ</strong>商品番号を追加する`,
+        `1番下までスクロールして「<strong>確認</strong>」をクリックして完了`,
+        `カレンダーシートの完了チェック欄にチェックを入れ、<strong>ダブルチェック後に上長へ報告</strong>`
+      ]) +
+      `<p style="margin-top:10px;font-size:13px;color:#888;">詳細は下記マニュアルの <strong style="color:#0F6E56;">21〜26ページ</strong> をご確認ください。</p>` +
+      CANVA_COUPON,
+    choices: [
+      { label: '新規発行の方法も知りたい', next: 'answer_new' },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  answer_bulk: {
+    html: `<p style="margin-bottom:10px;">特定の日や会員ランクに応じて自動発行される一括定期クーポンの設定手順です。</p>` +
+      stepsHtml([
+        `ストアクリエイタープロの <strong>集客・販促 → クーポン → クーポン設定</strong> を開く`,
+        `「<strong>一括定期クーポン設定</strong>」タブを選択する`,
+        `「<strong>変更</strong>」ボタンをクリックし、設定したい月を選ぶだけで完了`
+      ]) +
+      `<p style="margin-top:10px;font-size:13px;color:#888;">詳細は下記マニュアルの <strong style="color:#0F6E56;">4〜5ページ</strong> をご確認ください。</p>` +
+      CANVA_COUPON,
+    choices: [{ label: '最初に戻る', next: 'start', back: true }]
+  },
+  answer_types: {
+    html: `<p style="margin-bottom:10px;">ヤフショのクーポンには3種類あります。<br><strong style="color:#0F6E56;">弊社が使用しているのは①と②のみ</strong>です。</p>` +
+      stepsHtml([
+        `<strong>店舗クーポン</strong>：担当者が詳細を設定して発行するクーポン`,
+        `<strong>一括定期クーポン</strong>：特定の日や会員ランクに応じて自動発行されるクーポン`,
+        `<strong>インテリジェントクーポン</strong>：AIが最適なタイミングで自動配信（弊社では使用しない）`
+      ]) +
+      `<p style="margin-top:10px;font-size:13px;color:#888;">詳細は下記マニュアルの <strong style="color:#0F6E56;">3ページ</strong> をご確認ください。</p>` +
+      CANVA_COUPON,
+    choices: [
+      { label: '新規発行の手順を知りたい', next: 'answer_new' },
+      { label: '一括定期の設定を知りたい', next: 'answer_bulk' },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  wip: {
+    text: 'このナレッジは現在準備中です。\n担当部署に直接ご確認ください。',
+    choices: [{ label: '最初に戻る', next: 'start', back: true }]
+  },
+  wip_dept: {
+    text: 'この部署のナレッジは現在準備中です。\nもうしばらくお待ちください。',
+    choices: [{ label: '最初に戻る', next: 'start', back: true }]
+  },
+  free_input: {
+    text: 'どんなことでも自由に入力してください。',
+    choices: [{ label: '最初に戻る', next: 'start', back: true }]
+  }
+};
+
+const messagesEl = document.getElementById('messages');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+const scrollBottom = () => messagesEl.scrollTop = messagesEl.scrollHeight;
+
+function showTyping() {
+  const row = document.createElement('div'); row.className = 'msg-row bot'; row.id = 'typing-row';
+  const av = document.createElement('div'); av.className = 'avatar bot'; av.textContent = 'KB';
+  const b = document.createElement('div'); b.className = 'bubble bot';
+  b.innerHTML = '<div class="typing"><span></span><span></span><span></span></div>';
+  row.appendChild(av); row.appendChild(b); messagesEl.appendChild(row); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typing-row'); if (t) t.remove(); }
+
+function addUserMsg(text) {
+  const row = document.createElement('div'); row.className = 'msg-row user';
+  const av = document.createElement('div'); av.className = 'avatar user'; av.textContent = 'あ';
+  const b = document.createElement('div'); b.className = 'bubble user'; b.style.whiteSpace = 'pre-line'; b.textContent = text;
+  row.appendChild(av); row.appendChild(b); messagesEl.appendChild(row); scrollBottom();
+}
+
+function makeChoices(flow, b) {
+  if (!flow.choices || !flow.choices.length) return;
+  const choicesEl = document.createElement('div'); choicesEl.className = 'choices';
+  flow.choices.forEach((c, i) => {
+    const btn = document.createElement('button');
+    if (c.wip) {
+      btn.className = 'choice-btn';
+      btn.innerHTML = `<span class="num">${i+1}</span>${c.label}<span class="badge-wip">準備中</span>`;
+      btn.addEventListener('click', () => { addUserMsg(c.label); showFlow('wip_dept'); });
+    } else if (c.free) {
+      btn.className = 'choice-btn free';
+      btn.innerHTML = `<span class="num free-icon">✎</span>${c.label}`;
+      btn.addEventListener('click', () => { addUserMsg(c.label); showFlow('free_input'); setTimeout(() => input.focus(), 700); });
+    } else if (c.back) {
+      btn.className = 'choice-btn';
+      btn.innerHTML = `<span class="num back">←</span>${c.label}`;
+      btn.addEventListener('click', () => { addUserMsg(c.label); showFlow(c.next); });
+    } else {
+      btn.className = 'choice-btn';
+      const num = document.createElement('span'); num.className = 'num'; num.textContent = i+1;
+      btn.appendChild(num); btn.appendChild(document.createTextNode(c.label));
+      btn.addEventListener('click', () => { addUserMsg(c.label); showFlow(c.next); });
+    }
+    choicesEl.appendChild(btn);
+  });
+  b.appendChild(choicesEl);
+}
+
+function showFlow(key) {
+  const flow = flows[key]; if (!flow) return;
+  showTyping();
+  setTimeout(() => {
+    removeTyping();
+    const row = document.createElement('div'); row.className = 'msg-row bot';
+    const av = document.createElement('div'); av.className = 'avatar bot'; av.textContent = 'KB';
+    const b = document.createElement('div'); b.className = 'bubble bot';
+    if (flow.html) { b.innerHTML = flow.html; } else { b.style.whiteSpace = 'pre-line'; b.textContent = flow.text; }
+    makeChoices(flow, b);
+    row.appendChild(av); row.appendChild(b); messagesEl.appendChild(row); scrollBottom();
+  }, 600);
+}
+
+function handleSend() {
+  const text = input.value.trim(); if (!text) return;
+  addUserMsg(text); input.value = '';
+  showTyping();
+  setTimeout(() => {
+    removeTyping();
+    const row = document.createElement('div'); row.className = 'msg-row bot';
+    const av = document.createElement('div'); av.className = 'avatar bot'; av.textContent = 'KB';
+    const b = document.createElement('div'); b.className = 'bubble bot'; b.style.whiteSpace = 'pre-line';
+    b.textContent = 'ご質問ありがとうございます。\n担当者がナレッジを確認・更新いたします。\n\nお急ぎの場合は担当部署に直接お問い合わせください。';
+    const choicesEl = document.createElement('div'); choicesEl.className = 'choices';
+    const btn = document.createElement('button'); btn.className = 'choice-btn';
+    btn.innerHTML = `<span class="num back">←</span>最初に戻る`;
+    btn.addEventListener('click', () => { addUserMsg('最初に戻る'); showFlow('start'); });
+    choicesEl.appendChild(btn); b.appendChild(choicesEl);
+    row.appendChild(av); row.appendChild(b); messagesEl.appendChild(row); scrollBottom();
+  }, 800);
+}
+
+sendBtn.addEventListener('click', handleSend);
+input.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); } });
+showFlow('start');
+</script>
+</body>
+</html>
