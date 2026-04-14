@@ -237,7 +237,7 @@ const flows = {
   free_input: { text: 'どんなことでも自由に入力してください。', choices: [{ label: '最初に戻る', next: 'start', back: true }] }
 };
 
-const LSVG = '<svg viewBox="0 0 24 24"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42L17.59 5H14V3zm-1 3H5a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-8h-2v8H5V8h8V6z"/></svg>';
+const LSVG = '<svg width="14" height="14" viewBox="0 0 24 24"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42L17.59 5H14V3zm-1 3H5a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-8h-2v8H5V8h8V6z"/></svg>';
 const ml = (url, label) => '<a class="manual-link" href="' + url + '" target="_blank">' + LSVG + label + '</a>';
 const canvaEmbed = (src) => src ? '<div class="canva-wrap"><iframe loading="lazy" src="' + src + '" allowfullscreen allow="fullscreen"></iframe></div><p class="canva-note">スライドをスクロールして該当ページをご確認ください</p>' : '';
 
