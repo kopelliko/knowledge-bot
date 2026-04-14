@@ -140,10 +140,24 @@ const flows = {
   cat_B_O_楽天設定: {
     text: '楽天設定の何について知りたいですか？',
     choices: [
-      { label: 'ポイント変倍設定', next: 'wip', wip: true },
+      { label: 'ポイント変倍設定', next: 'item_ポイント変倍設定' },
       { label: 'キャッシュバックキャンペーン設定', next: 'wip', wip: true },
       { label: 'クーポン設定', next: 'wip', wip: true },
       { label: 'B.Oに戻る', next: 'dept_B_O', back: true }
+    ]
+  },
+  item_ポイント変倍設定: {
+    get html() { return canvaEmbed('<div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%;
+ padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
+ border-radius: 8px; will-change: transform;">
+  <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+    src="https://www.canva.com/design/DAHDm-nWrtE/eRfp7UqE5-Iet4ES_qkNfQ/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
+  </iframe>
+</div>
+豊島 浩太さんによる<a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAHDm-nWrtE&#x2F;eRfp7UqE5-Iet4ES_qkNfQ&#x2F;view?utm_content=DAHDm-nWrtE&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">【楽天】ポイント変倍の設定</a>'); },
+    choices: [
+      { label: '楽天設定に戻る', next: 'cat_B_O_楽天設定', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
     ]
   },
   cat_B_O_ヤフショ設定: {
