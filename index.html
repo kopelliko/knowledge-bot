@@ -77,6 +77,7 @@ const flows = {
       { label: '発送', next: 'dept_発送' },
       { label: '納品', next: 'dept_納品' },
       { label: 'バックオフィス', next: 'dept_バックオフィス' },
+      { label: '棚卸し', next: 'dept_棚卸し' },
       { label: '自由に質問する', next: 'free_input', free: true }
     ]
   },
@@ -210,6 +211,19 @@ const flows = {
       { label: '不正注文の取り戻し請求', next: 'wip', wip: true },
       { label: 'ヤマトの破損請求', next: 'wip', wip: true },
       { label: 'バックオフィスに戻る', next: 'dept_バックオフィス', back: true }
+    ]
+  },
+  dept_棚卸し: {
+    text: '棚卸しの何について知りたいですか？',
+    choices: [
+      { label: '棚卸し前の準備', next: 'cat_棚卸し_棚卸し前の準備' },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  cat_棚卸し_棚卸し前の準備: {
+    text: '棚卸し前の準備の何について知りたいですか？',
+    choices: [
+      { label: '棚卸しに戻る', next: 'dept_棚卸し', back: true }
     ]
   },
   wip: { text: 'このナレッジは現在準備中です。\n担当部署に直接ご確認ください。', choices: [{ label: '最初に戻る', next: 'start', back: true }] },
