@@ -76,7 +76,7 @@ const flows = {
     choices: [
       { label: '発送', next: 'dept_発送' },
       { label: '納品', next: 'dept_納品' },
-      { label: 'B.O', next: 'dept_B_O' },
+      { label: 'バックオフィス', next: 'dept_バックオフィス' },
       { label: '自由に質問する', next: 'free_input', free: true }
     ]
   },
@@ -122,35 +122,37 @@ const flows = {
       { label: '納品に戻る', next: 'dept_納品', back: true }
     ]
   },
-  dept_B_O: {
-    text: 'B.Oの何について知りたいですか？',
+  dept_バックオフィス: {
+    text: 'バックオフィスの何について知りたいですか？',
     choices: [
-      { label: '楽天設定', next: 'cat_B_O_楽天設定' },
-      { label: 'ヤフショ設定', next: 'cat_B_O_ヤフショ設定' },
-      { label: '楽天/ヤフショ共通', next: 'cat_B_O_楽天_ヤフショ共通' },
-      { label: '出品作業', next: 'cat_B_O_出品作業' },
-      { label: 'クロスモール', next: 'cat_B_O_クロスモール' },
-      { label: 'その他', next: 'cat_B_O_その他' },
+      { label: '楽天設定', next: 'cat_バックオフィス_楽天設定' },
+      { label: 'ヤフショ設定', next: 'cat_バックオフィス_ヤフショ設定' },
+      { label: '楽天/ヤフショ共通', next: 'cat_バックオフィス_楽天_ヤフショ共通' },
+      { label: '出品作業', next: 'cat_バックオフィス_出品作業' },
+      { label: 'クロスモール', next: 'cat_バックオフィス_クロスモール' },
+      { label: '価格の調整', next: 'cat_バックオフィス_価格の調整' },
+      { label: 'その他', next: 'cat_バックオフィス_その他' },
       { label: '最初に戻る', next: 'start', back: true }
     ]
   },
-  cat_B_O_楽天設定: {
+  cat_バックオフィス_楽天設定: {
     text: '楽天設定の何について知りたいですか？',
     choices: [
       { label: 'ポイント変倍設定', next: 'item_ポイント変倍設定' },
       { label: 'キャッシュバックキャンペーン設定', next: 'wip', wip: true },
       { label: 'クーポン設定', next: 'wip', wip: true },
-      { label: 'B.Oに戻る', next: 'dept_B_O', back: true }
+      { label: 'LINE配信', next: 'wip', wip: true },
+      { label: 'バックオフィスに戻る', next: 'dept_バックオフィス', back: true }
     ]
   },
   item_ポイント変倍設定: {
     get html() { return ml('https://www.canva.com/design/DAHDm-nWrtE/eRfp7UqE5-Iet4ES_qkNfQ/view', 'ポイント変倍設定マニュアルを開く') + canvaEmbed('https://www.canva.com/design/DAHDm-nWrtE/eRfp7UqE5-Iet4ES_qkNfQ/view?embed'); },
     choices: [
-      { label: '楽天設定に戻る', next: 'cat_B_O_楽天設定', back: true },
+      { label: '楽天設定に戻る', next: 'cat_バックオフィス_楽天設定', back: true },
       { label: '最初に戻る', next: 'start', back: true }
     ]
   },
-  cat_B_O_ヤフショ設定: {
+  cat_バックオフィス_ヤフショ設定: {
     text: 'ヤフショ設定の何について知りたいですか？',
     choices: [
       { label: 'ボーナスストア', next: 'wip', wip: true },
@@ -159,20 +161,20 @@ const flows = {
       { label: '爆買いWEEK', next: 'wip', wip: true },
       { label: 'あなただけのタイムセール', next: 'wip', wip: true },
       { label: '広告のブースト', next: 'wip', wip: true },
-      { label: 'B.Oに戻る', next: 'dept_B_O', back: true }
+      { label: 'バックオフィスに戻る', next: 'dept_バックオフィス', back: true }
     ]
   },
-  cat_B_O_楽天_ヤフショ共通: {
+  cat_バックオフィス_楽天_ヤフショ共通: {
     text: '楽天/ヤフショ共通の何について知りたいですか？',
     choices: [
       { label: 'LINEお友達追加クーポン', next: 'wip', wip: true },
-      { label: 'B.Oに戻る', next: 'dept_B_O', back: true }
+      { label: 'バックオフィスに戻る', next: 'dept_バックオフィス', back: true }
     ]
   },
-  cat_B_O_出品作業: {
+  cat_バックオフィス_出品作業: {
     text: '出品作業の何について知りたいですか？',
     choices: [
-      { label: '手順①商品バリエーションの決定', next: 'wip', wip: true },
+      { label: '手順①商品のバリエーションの決定', next: 'wip', wip: true },
       { label: '手順②棚・棚番の作成', next: 'wip', wip: true },
       { label: '手順③出品登録の準備', next: 'wip', wip: true },
       { label: '手順④商品画像作成', next: 'wip', wip: true },
@@ -180,21 +182,34 @@ const flows = {
       { label: '手順⑥在庫連動の設定', next: 'wip', wip: true },
       { label: '手順⑦広告の除外', next: 'wip', wip: true },
       { label: '手順⑧最終確認', next: 'wip', wip: true },
-      { label: 'B.Oに戻る', next: 'dept_B_O', back: true }
+      { label: 'バックオフィスに戻る', next: 'dept_バックオフィス', back: true }
     ]
   },
-  cat_B_O_クロスモール: {
+  cat_バックオフィス_クロスモール: {
     text: 'クロスモールの何について知りたいですか？',
     choices: [
       { label: '当日の注文キャンセル方法', next: 'wip', wip: true },
-      { label: 'B.Oに戻る', next: 'dept_B_O', back: true }
+      { label: '再送の処理', next: 'wip', wip: true },
+      { label: '住所変更', next: 'wip', wip: true },
+      { label: '棚番の変更', next: 'wip', wip: true },
+      { label: '注文エラー', next: 'wip', wip: true },
+      { label: 'バックオフィスに戻る', next: 'dept_バックオフィス', back: true }
     ]
   },
-  cat_B_O_その他: {
+  cat_バックオフィス_価格の調整: {
+    text: '価格の調整の何について知りたいですか？',
+    choices: [
+      { label: 'ライバルの価格調査', next: 'wip', wip: true },
+      { label: '調査後の価格見直し', next: 'wip', wip: true },
+      { label: 'バックオフィスに戻る', next: 'dept_バックオフィス', back: true }
+    ]
+  },
+  cat_バックオフィス_その他: {
     text: 'その他の何について知りたいですか？',
     choices: [
       { label: '不正注文の取り戻し請求', next: 'wip', wip: true },
-      { label: 'B.Oに戻る', next: 'dept_B_O', back: true }
+      { label: 'ヤマトの破損請求', next: 'wip', wip: true },
+      { label: 'バックオフィスに戻る', next: 'dept_バックオフィス', back: true }
     ]
   },
   wip: { text: 'このナレッジは現在準備中です。\n担当部署に直接ご確認ください。', choices: [{ label: '最初に戻る', next: 'start', back: true }] },
