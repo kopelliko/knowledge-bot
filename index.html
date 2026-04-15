@@ -943,17 +943,15 @@ async function handleSend() {
     const related = findRelatedFlows(text);
 
     if(related.length===1 && related[0].exact){
-      // 1発で特定できた → そのままフローへ
       const rb=document.createElement('button'); rb.className='choice-btn';
       rb.innerHTML='<span class="num">1</span>'+related[0].key.replace('item_','').replace(/_/g,' ')+'の手順を見る';
       rb.addEventListener('click',function(){ addUserMsg('手順を見る'); showFlow(related[0].key); });
       choicesEl.appendChild(rb);
     } else if(related.length > 0){
-      // 部署レベルの選択肢を表示
-      const label=document.createElement('div');
-      label.style='font-size:12px;color:#888;margin-bottom:4px;';
-      label.textContent='どの業務についてですか？';
-      choicesEl.appendChild(label);
+      const lbl=document.createElement('div');
+      lbl.style='font-size:12px;color:#888;margin-bottom:4px;';
+      lbl.textContent='どの業務についてですか？';
+      choicesEl.appendChild(lbl);
       related.forEach(function(r,i){
         const rb=document.createElement('button'); rb.className='choice-btn';
         rb.innerHTML='<span class="num">'+(i+1)+'</span>'+r.label+'の作業';
@@ -961,7 +959,6 @@ async function handleSend() {
         choicesEl.appendChild(rb);
       });
     } else {
-      // マッチなし → 全部署を選択肢に
       ['dept_発送','dept_納品','dept_バックオフィス','dept_棚卸し'].forEach(function(k,i){
         if(!flows[k]) return;
         const rb=document.createElement('button'); rb.className='choice-btn';
@@ -971,6 +968,22 @@ async function handleSend() {
         choicesEl.appendChild(rb);
       });
     }
+
+    const otherBtn=document.createElement('button'); otherBtn.className='choice-btn free';
+    otherBtn.innerHTML='<span class="num free-icon">✎</span>もう少し詳しく教えてください';
+    otherBtn.addEventListener('click',function(){ addUserMsg('もう少し詳しく教えてください'); setTimeout(function(){input.focus();},300); });
+    choicesEl.appendChild(otherBtn);
+    const backBtn=document.createElement('button'); backBtn.className='choice-btn';
+    backBtn.innerHTML='<span class="num back">←</span>最初に戻る';
+    backBtn.addEventListener('click',function(){ addUserMsg('最初に戻る'); showFlow('start'); });
+    choicesEl.appendChild(backBtn);
+    b.appendChild(choicesEl);
+    row.appendChild(av); row.appendChild(b); messagesEl.appendChild(row); scrollBottom();
+  } catch(err) {
+    removeTyping();
+    console.error(err);
+  }
+}
 
     const otherBtn=document.createElement('button'); otherBtn.className='choice-btn free';
     otherBtn.innerHTML='<span class="num free-icon">✎</span>もう少し詳しく教えてください';
