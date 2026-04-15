@@ -431,8 +431,138 @@ const flows = {
     ]
   },
   item_納品作業: {
-    get html() { return ml('https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view', '納品作業マニュアルを開く') + canvaEmbed('https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view?embed'); },
+    get html() { return '納品作業のどのセクションを確認しますか？' + ml('https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view', '納品作業マニュアルを開く') + canvaEmbed('https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view?embed'); },
     choices: [
+      { label: '概要 (p.1-2)', next: 'item_納品作業_s0' },
+      { label: 'Amazon納品倉庫 (p.3-4)', next: 'item_納品作業_s1' },
+      { label: '段ボールへの記載 (p.5)', next: 'item_納品作業_s2' },
+      { label: '場所（備考）欄 (p.6)', next: 'item_納品作業_s3' },
+      { label: 'Amazon備考 (p.8-10)', next: 'item_納品作業_s4' },
+      { label: 'JAN・画像・商品名 (p.14)', next: 'item_納品作業_s5' },
+      { label: '入荷数～A法人まで (p.15-16)', next: 'item_納品作業_s6' },
+      { label: 'ASIN (p.17)', next: 'item_納品作業_s7' },
+      { label: 'Amazon全商品共通のルール (p.18-24)', next: 'item_納品作業_s8' },
+      { label: 'Amazon納品手順のまとめ (p.25)', next: 'item_納品作業_s9' },
+      { label: '納品作業に戻る', next: 'cat_納品_納品作業', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_納品作業_s0: {
+    page: '1-2',
+    canvaUrl: 'https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view',
+    embedUrl: 'https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view?embed',
+    itemName: '納品作業',
+    text: 'Amazonに納品する際には入荷リストの赤枠の部分だけを確認すればOKです。\n\n**確認が必要な項目：**\n- 場所（備考）\n- Amazon備考\n- JAN\n- 画像・商品名\n- 入荷数\n- 事務所\n- Aメイン・Aサブ・A法人\n- 楽天\n- ASIN',
+    choices: [
+      { label: '納品作業に戻る', next: 'item_納品作業', back: true },
+      { label: '納品作業に戻る', next: 'cat_納品_納品作業', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_納品作業_s1: {
+    page: '3-4',
+    canvaUrl: 'https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view',
+    embedUrl: 'https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view?embed',
+    itemName: '納品作業',
+    text: 'Amazonの場合この商品を何個納品するというデータをAmazonに送った際に、（これを納品プランを作ると言います）自動でこの商品はこの住所の倉庫に納品するという風に割り振られます。\n\n**重要なルール：**\n- **同じ倉庫番号の商品は同じ発送先になります**\n- **同じ倉庫番号の商品は最終的にその個数がその倉庫に納品されればいいので、どの段ボールにどの商品が入っていても問題ありません**\n\n### いい例 ○\n- 同じ倉庫番号の商品のみを段ボールに梱包\n\n### 悪い例 ×\n- 異なる倉庫番号の商品を同じ段ボールに混在させる',
+    choices: [
+      { label: '納品作業に戻る', next: 'item_納品作業', back: true },
+      { label: '納品作業に戻る', next: 'cat_納品_納品作業', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_納品作業_s2: {
+    page: '5',
+    canvaUrl: 'https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view',
+    embedUrl: 'https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view?embed',
+    itemName: '納品作業',
+    text: '**自分が梱包した段ボールには必ずAma①、Ama②、楽天などの文字を書く。**\n\n- **同じ番号のものは同じ箇所に集めるようにしてください**\n- 最終的にこの段ボールのメモを元に箱数を数えて各倉庫への発送伝票を作成します',
+    choices: [
+      { label: '納品作業に戻る', next: 'item_納品作業', back: true },
+      { label: '納品作業に戻る', next: 'cat_納品_納品作業', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_納品作業_s3: {
+    page: '6',
+    canvaUrl: 'https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view',
+    embedUrl: 'https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view?embed',
+    itemName: '納品作業',
+    text: '商品のある場所を意味しています。\n\n- 入荷したものが置かれている場所に商品がない場合は、この列に記載の番号の棚から商品を取って作業をします\n- **棚に商品がない場合、どこかに必ずあるので聞いてくれればOKです**',
+    choices: [
+      { label: '納品作業に戻る', next: 'item_納品作業', back: true },
+      { label: '納品作業に戻る', next: 'cat_納品_納品作業', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_納品作業_s4: {
+    page: '8-10',
+    canvaUrl: 'https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view',
+    embedUrl: 'https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view?embed',
+    itemName: '納品作業',
+    text: 'Amazonに納品する際の各商品の注意点を書いています。\n\n### 主な指示内容\n- **2本セット組** → 商品2個をラップまたは袋で1セットにします（どの袋を使うか指定されているものもあります）\n- **Amazon用説明書シール** → 商品にAmazon用の説明書シールを貼ります\n\n**※その他の文言が書かれている場合は都度確認してください**\n\n### 要期限管理商品（緑色の備考）\nAmazon備考が**緑色**になっている場合、この商品はこの商品だけの箱を作る必要があります。\n\n**要期限管理商品の条件：**\n- 使用期限がある商品（カメラのフィルム、食品、化粧品等）\n- ■ 要期限管理商品以外と同梱していない\n- ■ Amazon到着時に消費期限まで60日以上残っている\n- ■ ASINごとに消費期限が同じ\n\n**要期限管理商品が入っている段ボールにはFBAラベルを段ボールの外面に貼り付ける必要があります。**\n\n#### いい例 ○\n- 要期限管理商品のみを梱包\n- 商品ごとに同じ消費期限でまとめる\n- FBAラベル貼付済み\n\n#### 悪い例 ×\n- 要期限管理商品以外との同梱\n- 要期限管理商品ラベルの貼り忘れ\n- 同じ商品の消費期限違いを送る',
+    choices: [
+      { label: '納品作業に戻る', next: 'item_納品作業', back: true },
+      { label: '納品作業に戻る', next: 'cat_納品_納品作業', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_納品作業_s5: {
+    page: '14',
+    canvaUrl: 'https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view',
+    embedUrl: 'https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view?embed',
+    itemName: '納品作業',
+    text: '- **JAN**：商品のバーコード。何かの商品の作業を開始する際に、入荷リストのJANと商品を手元において、商品に印字されているバーコードと入荷リストのJANが正しいことを確認します（下4桁程度を照らし合わせる程度でOK）\n- **画像・商品名**：参考程度に載せていますが、**似ている商品もあるので必ずJANで確認**',
+    choices: [
+      { label: '納品作業に戻る', next: 'item_納品作業', back: true },
+      { label: '納品作業に戻る', next: 'cat_納品_納品作業', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_納品作業_s6: {
+    page: '15-16',
+    canvaUrl: 'https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view',
+    embedUrl: 'https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view?embed',
+    itemName: '納品作業',
+    text: '- **入荷数**：その週に入荷した数量が記載されています\n- **全数をAmazon倉庫や楽天倉庫に納品するわけではなく事務所に置いておくものもあります**\n- **不良数**：納品作業中に判明したダメージ品の数量をメモする列\n- **事務所**：入荷したものの中で事務所に残す数量（入荷してないものは空欄）\n\n### Amazonアカウント管理\n弊社はAmazonのアカウントを3つ運用しています。\n- **Aメイン**：Amazonメイン\n- **Aサブ**：Amazonサブ\n- **A法人**：Amazon法人\n\n**各アカウント毎に必ず発送先の倉庫は別の場所になります**',
+    choices: [
+      { label: '納品作業に戻る', next: 'item_納品作業', back: true },
+      { label: '納品作業に戻る', next: 'cat_納品_納品作業', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_納品作業_s7: {
+    page: '17',
+    canvaUrl: 'https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view',
+    embedUrl: 'https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view?embed',
+    itemName: '納品作業',
+    text: 'ASINはAmazonの1商品毎に決まっている商品の管理番号です（全セラー共通）。\n\n**作業手順：**\n1. 商品を作業する際に商品に貼る商品ラベルを探す必要があります\n2. その際に使用するのがこのASINです\n3. 商品ラベルの中から対応するシールを見つけて手元においておきます\n4. 違う商品が混じっている端数が出た場合はハサミで切ってクリアファイルに入れておきます',
+    choices: [
+      { label: '納品作業に戻る', next: 'item_納品作業', back: true },
+      { label: '納品作業に戻る', next: 'cat_納品_納品作業', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_納品作業_s8: {
+    page: '18-24',
+    canvaUrl: 'https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view',
+    embedUrl: 'https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view?embed',
+    itemName: '納品作業',
+    text: '### 商品ラベルの貼り方\n\n#### 基本ルール\n- **ラベルシールは、必ず商品のバーコードを必ず隠す形で貼り付けます**\n- このシールに店舗の情報やどの商品ページに出品されるかの情報が入っています\n- **他のバーコードをAmazon倉庫で読み込まないように1商品1バーコード（商品ラベルだけが見える）の状態にします**\n\n#### パッケージがない商品\nパッケージがない商品は袋に入れるというルールがあります。\n\n**方法：**\n1. 袋に入れる前にバーコードを隠し、袋の上から商品ラベルを貼る\n2. タグのバーコード面を内側に入れた状態で袋に入れ、セロテープで固定し、袋の上から商品ラベルを貼る\n\n**どちらか早い方で作業していただければOKです。**\n\n#### セット商品\n- セット品は袋に入れる、もしくはラップで複数の商品を1つにします\n- **その際にバーコードが内側に重なるようにセットすると、バーコードを隠す必要がなく、商品ラベルを貼るだけで納品できるので効率的です**\n- 袋に入れるのかラップなのかはシートのAmazon備考に記載されています\n- 形状的にどうしてもバーコードを内側にセットできない場合は無地のシールでバーコードを隠します\n\n#### シールが貼れない小さい商品\n- 商品ラベルが貼れない小さな商品の場合はジップロックか袋に入れて納品します\n- 商品がジップロックの中で動く範囲を考えた時に、**バーコード全面が外に見えない程度なら隠す必要はありません**\n- 効率的に作業するために小さめのジップロックを使えばOKです\n\n#### 液体、粒、粉が入っている商品\n液体や粉が入っている商品は袋に入れて納品するルールがあります。\n\n**方法：**\n1. 商品のバーコードを隠してから袋に入れ、袋の上から商品ラベルを貼る\n2. 袋に入れてからバーコードを隠す形で商品ラベルを貼る\n\n**どちらか早い方でOKです。**\n\n#### 筒状の商品の場合\n**筒状の商品の場合、商品ラベルを横向きに貼るとバーコードリーダーで読み込めない可能性があるので縦向きに貼る必要があります。**\n\n### 段ボールへの配送ラベルの貼り方 <!-- page:24 -->\n\n- 各納品倉庫毎に異なる配送ラベルを貼り付けます\n- **1ダンボールにつき配送ラベル1個と宅配業者の配送伝票（現在は西濃運輸）1個を貼り付けます**\n- 商品ラベルと同様に、段ボールにバーコードが書いている場合は全てのバーコードをマジックで黒塗りします\n- **梱包後に段ボールの全面を確認してください**',
+    choices: [
+      { label: '納品作業に戻る', next: 'item_納品作業', back: true },
+      { label: '納品作業に戻る', next: 'cat_納品_納品作業', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_納品作業_s9: {
+    page: '25',
+    canvaUrl: 'https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view',
+    embedUrl: 'https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view?embed',
+    itemName: '納品作業',
+    text: '1. **商品のJANコードを確認して自分が作業する商品を準備**\n2. **Amazon備考欄を見て注意事項を確認**\n3. **ASIN欄を確認して商品ラベルを手元に置く**\n4. **商品ラベルを各商品の貼り方に合わせて貼り付ける**\n   - （1商品につきバーコードは商品ラベルのみの状態）\n5. **段ボールがパンパンになったら蓋を閉め、Amazon倉庫何番かをマジックで書く**\n   - （Ama①、Ama③など）\n6. **段ボールの全面を確認してバーコードが印字されている場合は、マジックで黒塗りする**\n7. **他の倉庫行きと混ざらないように楽天やAma①やAma③などが集まっている場所に自分が梱包した段ボールを置く**\n8. **全ての梱包が終わったら、倉庫毎の箱数を数えて、配送ラベルと佐川の伝票を印刷して貼りつけ**',
+    choices: [
+      { label: '納品作業に戻る', next: 'item_納品作業', back: true },
       { label: '納品作業に戻る', next: 'cat_納品_納品作業', back: true },
       { label: '最初に戻る', next: 'start', back: true }
     ]
