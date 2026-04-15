@@ -287,10 +287,17 @@ const flows = {
   cat_納品_納品作業: {
     text: '納品作業の何について知りたいですか？',
     choices: [
-      { label: '納品作業', next: 'wip', wip: true },
+      { label: '納品作業', next: 'item_納品作業' },
       { label: '納品後のパソコン作業', next: 'wip', wip: true },
       { label: '在庫管理シールの使い方', next: 'wip', wip: true },
       { label: '納品に戻る', next: 'dept_納品', back: true }
+    ]
+  },
+  item_納品作業: {
+    get html() { return ml('https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view', '納品作業マニュアルを開く') + canvaEmbed('https://www.canva.com/design/DAG477t53NQ/HPLqjOsutkpEmtj2cWZrDw/view?embed'); },
+    choices: [
+      { label: '納品作業に戻る', next: 'cat_納品_納品作業', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
     ]
   },
   dept_バックオフィス: {
