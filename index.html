@@ -92,10 +92,17 @@ const flows = {
   cat_発送_発送業務: {
     text: '発送業務の何について知りたいですか？',
     choices: [
-      { label: '梱包作業前の作業', next: 'wip', wip: true },
+      { label: '梱包作業前の作業', next: 'item_梱包作業前の作業' },
       { label: '梱包作業(スムースEC)', next: 'wip', wip: true },
       { label: '梱包後の作業', next: 'wip', wip: true },
       { label: '発送に戻る', next: 'dept_発送', back: true }
+    ]
+  },
+  item_梱包作業前の作業: {
+    get html() { return ml('https://www.canva.com/design/DAHBuv0mMzk/TYRsbIawvvq7J01lQPwyEg/view', '梱包作業前の作業マニュアルを開く') + canvaEmbed('https://www.canva.com/design/DAHBuv0mMzk/TYRsbIawvvq7J01lQPwyEg/view?embed'); },
+    choices: [
+      { label: '発送業務に戻る', next: 'cat_発送_発送業務', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
     ]
   },
   cat_発送_ラクマ出品: {
