@@ -966,7 +966,13 @@ function markdownToHtml(md) {
 }
 
 sendBtn.addEventListener('click', handleSend);
-input.addEventListener('keydown', e=>{ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();handleSend();} });
+input.addEventListener('keydown', function(e){
+  if(e.key==='Enter'&&!e.shiftKey){
+    e.preventDefault();
+    var v=input.value;
+    if(v.endsWith('\n')||v.trim()===''){handleSend();}else{input.value=v+'\n';}
+  }
+});
 showFlow('start');
 </script>
 </body>
