@@ -6,24 +6,21 @@
 <title>社内ナレッジBot</title>
 <meta name="theme-color" content="#1D9E75">
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-serif; background: #f5f5f0; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 16px; }
-#chat-wrap { display: flex; flex-direction: column; width: 100%; max-width: 680px; height: 90vh; max-height: 800px; background: #f5f5f0; border-radius: 16px; overflow: hidden; border: 0.5px solid #e0e0d8; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+body { margin: 0; font-family: sans-serif; background: #f5f7fa; }
+
+#chat-wrap { max-width: 480px; margin: 0 auto; background: #fff; height: 100vh; display: flex; flex-direction: column; }
+
 .app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px 20px;
   background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #f1f5f9;
   box-shadow: 0 1px 2px rgba(0,0,0,0.04);
 }
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+.header-left { display: flex; align-items: center; gap: 12px; }
 
 .logo {
   width: 40px;
@@ -35,74 +32,98 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-ser
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
-  flex-shrink: 0;
 }
 
-.header-text .title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #111827;
-}
+.header-text .title { font-size: 16px; font-weight: 600; }
 
-.header-text .subtitle {
-  font-size: 12px;
-  color: #6b7280;
-  margin-top: 2px;
-}
+.header-text .subtitle { font-size: 12px; color: #6b7280; }
 
 .header-right {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 12px;
-  color: #374151;
   background: #f9fafb;
   padding: 6px 10px;
   border-radius: 999px;
-  border: 1px solid #e5e7eb;
 }
 
-.status-dot {
-  width: 8px;
-  height: 8px;
-  background: #22c55e;
-  border-radius: 50%;
-}
+.status-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; }
 
-.status-text {
-  font-weight: 500;
-}
+#messages { flex: 1; overflow-y: auto; padding: 16px; }
 
-#messages { flex: 1; overflow-y: auto; padding: 20px 16px; display: flex; flex-direction: column; gap: 16px; }
-#messages::-webkit-scrollbar { width: 4px; }
-#messages::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
-.msg-row { display: flex; gap: 8px; align-items: flex-start; }
-.msg-row.user { flex-direction: row-reverse; }
-.avatar { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex-shrink: 0; margin-top: 2px; }
-.avatar.bot { background: #1D9E75; color: white; }
-.avatar.user { background: #e8f0fe; color: #2a6fdb; }
 .bubble {
   max-width: 82%;
   padding: 14px 16px;
   font-size: 14px;
   line-height: 1.8;
-  color: #1f2937;
 }
 
 .bubble.bot {
-  background: #ffffff;
+  background: #fff;
   border: 1px solid #e5e7eb;
   border-radius: 18px 18px 18px 8px;
-  box-shadow: 0 4px 16px rgba(16, 24, 40, 0.06);
+  box-shadow: 0 4px 16px rgba(16,24,40,0.06);
 }
 
 .bubble.user {
   background: #1D9E75;
-  color: #ffffff;
+  color: #fff;
   border-radius: 18px 18px 8px 18px;
-  box-shadow: 0 4px 14px rgba(29, 158, 117, 0.18);
 }
+
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.choice-btn {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 11px 14px;
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.choice-btn:hover {
+  background: #f8fffc;
+}
+
+.num {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: #e8f7f1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#input-area {
+  padding: 14px;
+  border-top: 1px solid #eef2f7;
+  display: flex;
+  gap: 10px;
+  box-shadow: 0 -4px 18px rgba(16,24,40,0.06);
+}
+
+#user-input {
+  flex: 1;
+  border: 1px solid #dbe3ea;
+  border-radius: 18px;
+  padding: 11px 16px;
+}
+
+#send-btn {
+  width: 44px;
+  height: 44px;
+  background: #1D9E75;
+  border-radius: 12px;
+}
+
 .manual-link {
   display: inline-flex;
   align-items: center;
@@ -116,15 +137,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-ser
   font-weight: 600;
   color: #0f6e56;
   text-decoration: none;
-  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
-  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
 }
 
-.manual-link:hover {
-  background: #effcf6;
-  border-color: #a9e0ca;
-  box-shadow: 0 4px 12px rgba(16, 24, 40, 0.06);
-}
 .canva-wrap {
   margin-top: 14px;
   border-radius: 14px;
@@ -135,7 +149,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-ser
   padding-top: 56.25%;
   border: 1px solid #e5e7eb;
   background: #f8fafc;
-  box-shadow: 0 4px 16px rgba(16, 24, 40, 0.06);
 }
 
 .canva-wrap iframe {
@@ -152,130 +165,38 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-ser
   color: #6b7280;
   margin-top: 8px;
 }
-.choices {
+
+.msg-row {
   display: flex;
-  flex-direction: column;
   gap: 8px;
-  margin-top: 12px;
-  align-items: flex-start;
-}
-.choice-btn {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  padding: 11px 14px;
-  font-size: 14px;
-  color: #111827;
-  cursor: pointer;
-  text-align: left;
-  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: inherit;
-  width: auto;
-  min-width: 160px;
-  max-width: 100%;
-  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+  margin-bottom: 12px;
 }
 
-.choice-btn:hover {
-  background: #f8fffc;
-  border-color: #b7e4d4;
-  box-shadow: 0 4px 12px rgba(16, 24, 40, 0.08);
-  transform: translateY(-1px);
-}
-.choice-btn.free {
-  border-style: dashed;
-  color: #4b5563;
-  background: #fcfcfd;
+.msg-row.user {
+  justify-content: flex-end;
 }
 
-.choice-btn.free:hover {
-  border-color: #b7e4d4;
-  color: #111827;
-  background: #f8fffc;
-}
-.badge-wip { margin-left: auto; font-size: 10px; padding: 2px 7px; background: #fff8e6; color: #b07d00; border-radius: 99px; border: 0.5px solid #f0d080; white-space: nowrap; }
-.num {
-  width: 24px;
-  height: 24px;
-  border-radius: 999px;
-  background: #e8f7f1;
-  color: #12805c;
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #e5e7eb;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
-  font-weight: 700;
+  font-size: 12px;
   flex-shrink: 0;
 }
-.num.back { background: #f0f0ec; color: #888; }
-.num.free-icon { background: #f0f0ec; color: #888; font-size: 15px; }
-.typing { display: flex; gap: 4px; align-items: center; padding: 4px 0; }
-.typing span { width: 6px; height: 6px; border-radius: 50%; background: #aaa; animation: bounce 1.2s infinite; }
-.typing span:nth-child(2) { animation-delay: 0.2s; }
-.typing span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes bounce { 0%,60%,100%{transform:translateY(0);opacity:0.4} 30%{transform:translateY(-6px);opacity:1} }
-#input-area {
-  background: rgba(255, 255, 255, 0.92);
-  border-top: 1px solid #eef2f7;
-  padding: 14px 16px 16px;
-  display: flex;
-  gap: 10px;
-  align-items: flex-end;
-  box-shadow: 0 -4px 18px rgba(16, 24, 40, 0.06);
-  backdrop-filter: blur(8px);
+
+.avatar.bot {
+  background: #1D9E75;
+  color: white;
 }
 
-#user-input {
-  flex: 1;
-  border: 1px solid #dbe3ea;
-  border-radius: 18px;
-  padding: 11px 16px;
-  font-size: 14px;
-  resize: none;
-  min-height: 44px;
-  max-height: 110px;
-  color: #111827;
-  background: #ffffff;
-  font-family: inherit;
-  outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+.avatar.user {
+  background: #d1d5db;
 }
 
-#user-input:focus {
-  border-color: #9fd8c4;
-  box-shadow: 0 0 0 4px rgba(29, 158, 117, 0.10);
-  background: #ffffff;
-}
-
-#user-input::placeholder {
-  color: #9ca3af;
-}
-
-#send-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
-  background: linear-gradient(180deg, #24b083 0%, #1D9E75 100%);
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: transform 0.15s, box-shadow 0.15s, filter 0.15s;
-  box-shadow: 0 6px 18px rgba(29, 158, 117, 0.22);
-}
-
-#send-btn:hover {
-  transform: translateY(-1px);
-  filter: brightness(0.98);
-  box-shadow: 0 10px 22px rgba(29, 158, 117, 0.28);
-}
-#send-btn svg { width: 17px; height: 17px; fill: white; }
-@media (max-width: 480px) { body{padding:0;} #chat-wrap{height:100vh;max-height:100vh;border-radius:0;border:none;} }
 </style>
 </head>
 <body>
@@ -325,7 +246,7 @@ const flows = {
     choices: [
       { label: '梱包作業前の作業', next: 'item_梱包作業前の作業' },
       { label: '梱包作業(スムースEC)', next: 'wip', wip: true },
-      { label: '梱包後の作業', next: 'item_梱包後の作業' },
+      { label: '梱包後の作業', next: 'wip', wip: true },
       { label: '発送に戻る', next: 'dept_発送', back: true }
     ]
   },
@@ -388,148 +309,10 @@ const flows = {
       { label: '最初に戻る', next: 'start', back: true }
     ]
   },
-  item_梱包後の作業: {
-    text: '梱包後の作業のどのセクションを確認しますか？',
-    choices: [
-      { label: '概要 (p.1-2)', next: 'item_梱包後の作業_s0' },
-      { label: 'Amazon納品倉庫 (p.3-4)', next: 'item_梱包後の作業_s1' },
-      { label: '段ボールの管理 (p.5)', next: 'item_梱包後の作業_s2' },
-      { label: '商品の保管場所 (p.6-7)', next: 'item_梱包後の作業_s3' },
-      { label: 'Amazon備考 (p.8-10)', next: 'item_梱包後の作業_s4' },
-      { label: 'JAN・画像・商品名 (p.14)', next: 'item_梱包後の作業_s5' },
-      { label: '入荷数〜A法人まで (p.15-16)', next: 'item_梱包後の作業_s6' },
-      { label: 'ASIN (p.17)', next: 'item_梱包後の作業_s7' },
-      { label: 'Amazon全商品共通のルール (p.18-24)', next: 'item_梱包後の作業_s8' },
-      { label: 'Amazon納品手順のまとめ (p.25)', next: 'item_梱包後の作業_s9' },
-      { label: '発送業務に戻る', next: 'cat_発送_発送業務', back: true },
-      { label: '最初に戻る', next: 'start', back: true }
-    ]
-  },
-  item_梱包後の作業_s0: {
-    page: '1-2',
-    canvaUrl: '',
-    embedUrl: '',
-    itemName: '梱包後の作業',
-    text: 'Amazonに納品する際には入荷リストの**赤枠の部分だけ**を確認すればOKです。\n\n重要な確認項目：\n- **場所（棚番）**\n- **Amazon備考**\n- **JAN**\n- **画像・商品名**\n- **A メイン・A サブ・A法人**\n- **ASIN**',
-    choices: [
-      { label: '梱包後の作業に戻る', next: 'item_梱包後の作業', back: true },
-      { label: '発送業務に戻る', next: 'cat_発送_発送業務', back: true },
-      { label: '最初に戻る', next: 'start', back: true }
-    ]
-  },
-  item_梱包後の作業_s1: {
-    page: '3-4',
-    canvaUrl: '',
-    embedUrl: '',
-    itemName: '梱包後の作業',
-    text: '### 基本ルール\n- Amazonに商品の納品データを送ると（納品プランを作る）、自動的に倉庫が割り振られる\n- **同じ倉庫番号の商品は同じ発送先になる**\n- 同じ倉庫番号の商品は最終的にその個数が倉庫に納品されればよい\n- どの段ボールにどの商品が入っていても問題なし\n\n### いい例 ✅\n- 同じ倉庫番号の商品のみを1つの段ボールに梱包\n- 同じ倉庫番号の商品を2つの段ボールに分散して梱包\n\n### 悪い例 ❌\n- 異なる倉庫番号の商品を混在させる',
-    choices: [
-      { label: '梱包後の作業に戻る', next: 'item_梱包後の作業', back: true },
-      { label: '発送業務に戻る', next: 'cat_発送_発送業務', back: true },
-      { label: '最初に戻る', next: 'start', back: true }
-    ]
-  },
-  item_梱包後の作業_s2: {
-    page: '5',
-    canvaUrl: '',
-    embedUrl: '',
-    itemName: '梱包後の作業',
-    text: '### **重要なルール**\n1. 梱包した段ボールには必ず「**Ama①**」「**Ama②**」「**楽天**」などの文字を書く\n2. **同じ番号のものは同じ箇所に集める**\n3. 最終的に段ボールのメモを元に箱数を数えて各倉庫への発送伝票を作成',
-    choices: [
-      { label: '梱包後の作業に戻る', next: 'item_梱包後の作業', back: true },
-      { label: '発送業務に戻る', next: 'cat_発送_発送業務', back: true },
-      { label: '最初に戻る', next: 'start', back: true }
-    ]
-  },
-  item_梱包後の作業_s3: {
-    page: '6-7',
-    canvaUrl: '',
-    embedUrl: '',
-    itemName: '梱包後の作業',
-    text: '### 場所（棚番）の意味\n- 商品のある場所を示している\n- 入荷したものが置かれている場所に商品がない場合、この列記載の番号の棚から商品を取る\n- **棚に商品がない場合は必ずどこかにあるので確認する**',
-    choices: [
-      { label: '梱包後の作業に戻る', next: 'item_梱包後の作業', back: true },
-      { label: '発送業務に戻る', next: 'cat_発送_発送業務', back: true },
-      { label: '最初に戻る', next: 'start', back: true }
-    ]
-  },
-  item_梱包後の作業_s4: {
-    page: '8-10',
-    canvaUrl: '',
-    embedUrl: '',
-    itemName: '梱包後の作業',
-    text: '### 基本的な処理\n- **2本セット組** → 商品2個をラップまたは袋で1セットにする\n- **Amazon用説明書シール** → 商品にAmazon用の説明書シールを貼る\n\n### 要期限管理商品（緑色表示）\n**この商品は単独で箱を作る必要がある**\n\n対象商品：カメラのフィルム、食品、化粧品等\n\n#### 必須条件\n- **要期限管理商品以外と同梱しない**\n- **Amazon到着時に消費期限まで60日以上残っている**\n- **ASINごとに消費期限が同じ**\n\n#### 専用ラベル\n要期限管理商品が入っている段ボールには**FBA要期限管理商品ラベル**を段ボール外面に貼付する\n\n### いい例 ✅\n1. 1つの段ボールに梱包\n2. 2つの段ボールに梱包\n3. 複数の箱に商品が分散（商品ごとに同じ消費期限）\n\n### 悪い例 ❌\n1. 要期限管理商品以外との同梱\n2. 要期限管理商品ラベルの貼り忘れ\n3. 同じ商品の消費期限違いを送る',
-    choices: [
-      { label: '梱包後の作業に戻る', next: 'item_梱包後の作業', back: true },
-      { label: '発送業務に戻る', next: 'cat_発送_発送業務', back: true },
-      { label: '最初に戻る', next: 'start', back: true }
-    ]
-  },
-  item_梱包後の作業_s5: {
-    page: '14',
-    canvaUrl: '',
-    embedUrl: '',
-    itemName: '梱包後の作業',
-    text: '### JANコード\n- 商品のバーコード\n- 作業開始時に入荷リストのJANと商品のバーコードが正しいことを確認\n- **下4桁程度を照らし合わせる程度でOK**\n\n### 画像・商品名\n- 参考程度に掲載\n- 似ている商品もあるため**必ずJANで確認**',
-    choices: [
-      { label: '梱包後の作業に戻る', next: 'item_梱包後の作業', back: true },
-      { label: '発送業務に戻る', next: 'cat_発送_発送業務', back: true },
-      { label: '最初に戻る', next: 'start', back: true }
-    ]
-  },
-  item_梱包後の作業_s6: {
-    page: '15-16',
-    canvaUrl: '',
-    embedUrl: '',
-    itemName: '梱包後の作業',
-    text: '### 各項目の説明\n- **入荷数**：その週に入荷した数量\n- **不良数**：納品作業中に判明したダメージ品の数量をメモする列\n- **事務所**：入荷したもののうち事務所に残す数量\n\n### Amazonアカウント\n弊社では3つのアカウントを運用：\n- **Aメイン**：Amazonメイン\n- **Aサブ**：Amazonサブ  \n- **A法人**：Amazon法人\n\n各アカウントごとに発送先倉庫は別の場所になる',
-    choices: [
-      { label: '梱包後の作業に戻る', next: 'item_梱包後の作業', back: true },
-      { label: '発送業務に戻る', next: 'cat_発送_発送業務', back: true },
-      { label: '最初に戻る', next: 'start', back: true }
-    ]
-  },
-  item_梱包後の作業_s7: {
-    page: '17',
-    canvaUrl: '',
-    embedUrl: '',
-    itemName: '梱包後の作業',
-    text: '### ASINとは\n- Amazonの1商品ごとに決まっている商品の管理番号（全セラー共通）\n- 商品ラベルを探す際に使用\n- 商品ラベルの中から対応するシールを見つけて手元に置く\n- 違う商品が混じっている端数が出た場合はハサミで切ってクリアファイルに保管',
-    choices: [
-      { label: '梱包後の作業に戻る', next: 'item_梱包後の作業', back: true },
-      { label: '発送業務に戻る', next: 'cat_発送_発送業務', back: true },
-      { label: '最初に戻る', next: 'start', back: true }
-    ]
-  },
-  item_梱包後の作業_s8: {
-    page: '18-24',
-    canvaUrl: '',
-    embedUrl: '',
-    itemName: '梱包後の作業',
-    text: '### 商品ラベルの貼り方\n\n#### 基本原則\n**ラベルシールは必ず商品のバーコードを隠す形で貼り付ける**\n- このシールに店舗情報や商品ページ情報が含まれる\n- **1商品1バーコード（商品ラベルのみが見える）**の状態にする\n\n#### パッケージがない商品\n**袋に入れるルールあり**\n\n方法：\n1. 袋に入れる前にバーコードを隠し、袋の上から商品ラベルを貼る\n2. タグのバーコード面を内側に入れた状態で袋に入れ、セロテープで固定し、袋の上から商品ラベルを貼る\n\n#### セット商品\n- 袋に入れる、もしくはラップで複数商品を1つにする\n- **バーコードが内側に重なるようにセット**すると効率的\n- 形状的にバーコードを内側にできない場合は無地のシールで隠す\n\n#### シールが貼れない小さい商品\n- ジップロックか袋に入れて納品\n- 商品がジップロック内で動く範囲を考慮し、**バーコード全面が外に見えない程度**なら隠す必要なし\n\n#### 液体、粒、粉が入っている商品\n**袋に入れて納品するルールあり**\n\n方法：\n1. 商品のバーコードを隠してから袋に入れ、袋の上から商品ラベルを貼る\n2. 袋に入れてからバーコードを隠す形で商品ラベルを貼る\n\n#### 筒状の商品\n- 商品ラベルを**縦向きに貼る**\n- 横向きだとバーコードリーダーで読み込めない可能性あり\n\n### 段ボールへの配送ラベルの貼り方\n- 各納品倉庫ごとに異なる配送ラベルを貼付\n- **1ダンボールにつき配送ラベル1個と宅配業者の配送伝票1個**\n- 段ボールにバーコードがある場合は**全てのバーコードをマジックで黒塗り**\n- 梱包後に段ボール全面を確認',
-    choices: [
-      { label: '梱包後の作業に戻る', next: 'item_梱包後の作業', back: true },
-      { label: '発送業務に戻る', next: 'cat_発送_発送業務', back: true },
-      { label: '最初に戻る', next: 'start', back: true }
-    ]
-  },
-  item_梱包後の作業_s9: {
-    page: '25',
-    canvaUrl: '',
-    embedUrl: '',
-    itemName: '梱包後の作業',
-    text: '1. **商品のJANコードを確認**して自分が作業する商品を準備\n2. **Amazon備考欄を確認**して注意事項を把握  \n3. **ASIN欄を確認**して商品ラベルを手元に置く\n4. **商品ラベルを各商品の貼り方に合わせて貼付**\n   - 1商品につきバーコードは商品ラベルのみの状態\n5. **段ボールがパンパンになったら蓋を閉め**、Amazon倉庫何番かをマジックで記入（Ama①、Ama③など）\n6. **段ボールの全面を確認**してバーコードが印字されている場合はマジックで黒塗り\n7. **他の倉庫行きと混ざらないよう**に楽天やAma①やAma③などが集まっている場所に梱包した段ボールを配置\n8. **全ての梱包が終わったら倉庫ごとの箱数を数えて**、配送ラベルと佐川の伝票を印刷して貼付',
-    choices: [
-      { label: '梱包後の作業に戻る', next: 'item_梱包後の作業', back: true },
-      { label: '発送業務に戻る', next: 'cat_発送_発送業務', back: true },
-      { label: '最初に戻る', next: 'start', back: true }
-    ]
-  },
   cat_発送_ラクマ出品: {
     text: 'ラクマ出品の何について知りたいですか？',
     choices: [
       { label: '出品方法', next: 'item_出品方法' },
-      { label: '値付け方法', next: 'wip', wip: true },
       { label: '発送方法', next: 'wip', wip: true },
       { label: '発送に戻る', next: 'dept_発送', back: true }
     ]
@@ -1677,7 +1460,10 @@ async function handleSend() {
     const res = await fetch(GAS_PROXY, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ query: text, conversation_id: conversationId })
+      body: JSON.stringify({
+  query: text + " 業務 マニュアル 手順 方法",
+  conversation_id: conversationId
+})
     });
     const data = await res.json();
     conversationId = data.conversation_id || '';
@@ -1687,7 +1473,7 @@ async function handleSend() {
     const b=document.createElement('div'); b.className='bubble bot';
     b.innerHTML = markdownToHtml(data.answer || 'エラーが発生しました。');
     const choicesEl=document.createElement('div'); choicesEl.className='choices';
-    const related = findRelatedFlows(text);
+    const related = [];
 
     if(related.length===1 && related[0].exact){
       const rb=document.createElement('button'); rb.className='choice-btn';
