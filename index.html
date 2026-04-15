@@ -1554,12 +1554,17 @@ function markdownToHtml(md) {
       '<img src="$2" alt="$1" style="max-width:100%;border-radius:12px;margin-top:10px;">'
     )
 
-    // Google Drive画像URL
-    .replace(/(https:\/\/drive\.google\.com\/uc\?export=view&amp;id=[a-zA-Z0-9_-]+)/g,
+    // Google Drive thumbnail URL
+    .replace(/(https:\/\/drive\.google\.com\/thumbnail\?id=[a-zA-Z0-9_-]+(?:&amp;|&)sz=w1600)/g,
       '<img src="$1" alt="image" style="max-width:100%;border-radius:12px;margin-top:10px;">'
     )
 
-    // jpg/png/webp/gif直リンク
+    // Google Drive uc URL
+    .replace(/(https:\/\/drive\.google\.com\/uc\?export=view(?:&amp;|&)id=[a-zA-Z0-9_-]+)/g,
+      '<img src="$1" alt="image" style="max-width:100%;border-radius:12px;margin-top:10px;">'
+    )
+
+    // 直リンク画像
     .replace(/(https?:\/\/[^\s<]+?\.(?:png|jpg|jpeg|gif|webp))/gi,
       '<img src="$1" alt="image" style="max-width:100%;border-radius:12px;margin-top:10px;">'
     )
