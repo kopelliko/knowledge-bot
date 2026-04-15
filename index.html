@@ -1364,7 +1364,6 @@ const flows = {
     ]
   },
   wip: { text: 'このナレッジは現在準備中です。\n担当部署に直接ご確認ください。', choices: [{ label: '最初に戻る', next: 'start', back: true }] },
-  free_input: { text: 'どんなことでも自由に入力してください。', choices: [{ label: '最初に戻る', next: 'start', back: true }] }
 };
 
 const LSVG = '<svg width="14" height="14" viewBox="0 0 24 24"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42L17.59 5H14V3zm-1 3H5a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-8h-2v8H5V8h8V6z"/></svg>';
@@ -1501,10 +1500,6 @@ async function handleSend() {
       });
     }
 
-    const otherBtn=document.createElement('button'); otherBtn.className='choice-btn free';
-    otherBtn.innerHTML='<span class="num free-icon">✎</span>もう少し詳しく教えてください';
-    otherBtn.addEventListener('click',function(){ addUserMsg('もう少し詳しく教えてください'); setTimeout(function(){input.focus();},300); });
-    choicesEl.appendChild(otherBtn);
     const backBtn=document.createElement('button'); backBtn.className='choice-btn';
     backBtn.innerHTML='<span class="num back">←</span>最初に戻る';
     backBtn.addEventListener('click',function(){ addUserMsg('最初に戻る'); showFlow('start'); });
