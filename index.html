@@ -779,7 +779,7 @@ const flows = {
       { label: 'ボーナスストア', next: 'item_ボーナスストア' },
       { label: 'ヤフショLINE配信', next: 'item_ヤフショLINE配信' },
       { label: 'クーポン', next: 'item_クーポン' },
-      { label: '爆買いWEEK', next: 'wip', wip: true },
+      { label: '爆買いWEEK', next: 'item_爆買いWEEK' },
       { label: 'あなただけのタイムセール', next: 'item_あなただけのタイムセール' },
       { label: '広告のブースト', next: 'item_広告のブースト' },
       { label: 'バックオフィスに戻る', next: 'dept_バックオフィス', back: true }
@@ -1036,6 +1036,13 @@ const flows = {
     text: '### 基本手順 <!-- page:21-23 -->\n\n#### 1. アクセス方法\n\n1. ストアクリエイタープロの集客・販促をクリック\n2. クーポンをクリック\n3. クーポン設定をクリック\n\n#### 2. 複製対象の選択\n\n1. **イベントカレンダー**シートの設定したい月を開く\n2. クーポン名をコピー\n3. ストアクリエイタープロのクーポン一覧画面で⌘F（コマンドF）で検索をかける\n4. 一致するクーポンの右にあるコピーボタンをクリック\n\n### 公開範囲の設定 <!-- page:24 -->\n\n**次月の1日から月末までを設定する。**\n\n例えば2月に翌月分を設定する場合、公開範囲は**3月1日〜3月31日まで**\n\n💡 **1日も漏れないように卓上カレンダーなどを見ながら設定してください**\n\n### 対象商品の設定 <!-- page:25 -->\n\n**スプレッドシート上で対象商品が赤文字になっている場合だけ触る**（対象商品を追加する必要がある場合のみ）\n\n💡 **複製だけをする場合はこの項目は触らないでください**\n\n**商品管理番号を追加する際には , （半角のカンマ）で区切って入力する**\n\n1番下までスクロールして確認をクリックして完了\n\n### 完了チェック <!-- page:26 -->\n\n**最後にカレンダーシートの設定したクーポンの完了チェック欄にチェックをいれて全ての設定が完了したら、ダブルチェックをした後に上長に報告をお願いします。**',
     choices: [
       { label: 'クーポンに戻る', next: 'item_クーポン', back: true },
+      { label: 'ヤフショに戻る', next: 'cat_バックオフィス_ヤフショ', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_爆買いWEEK: {
+    get html() { return ml('https://www.canva.com/design/DAHCyYkNl78/3RMyrnF0PX8hEeCMyVGrXg/view', '爆買いWEEKマニュアルを開く') + canvaEmbed('https://www.canva.com/design/DAHCyYkNl78/3RMyrnF0PX8hEeCMyVGrXg/view?embed'); },
+    choices: [
       { label: 'ヤフショに戻る', next: 'cat_バックオフィス_ヤフショ', back: true },
       { label: '最初に戻る', next: 'start', back: true }
     ]
