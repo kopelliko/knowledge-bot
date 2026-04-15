@@ -160,10 +160,17 @@ const flows = {
   cat_発送_ラクマ出品: {
     text: 'ラクマ出品の何について知りたいですか？',
     choices: [
-      { label: '出品方法', next: 'wip', wip: true },
+      { label: '出品方法', next: 'item_出品方法' },
       { label: '値付け方法', next: 'wip', wip: true },
       { label: '発送方法', next: 'wip', wip: true },
       { label: '発送に戻る', next: 'dept_発送', back: true }
+    ]
+  },
+  item_出品方法: {
+    get html() { return ml('https://www.canva.com/design/DAFdsTQ5kow/1R1klicDmm0mql3NDv6bbg/view', '出品方法マニュアルを開く') + canvaEmbed('https://www.canva.com/design/DAFdsTQ5kow/1R1klicDmm0mql3NDv6bbg/view?embed'); },
+    choices: [
+      { label: 'ラクマ出品に戻る', next: 'cat_発送_ラクマ出品', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
     ]
   },
   dept_納品: {
