@@ -985,41 +985,6 @@ async function handleSend() {
   }
 }
 
-    const otherBtn=document.createElement('button'); otherBtn.className='choice-btn free';
-    otherBtn.innerHTML='<span class="num free-icon">✎</span>もう少し詳しく教えてください';
-    otherBtn.addEventListener('click',function(){ 
-      addUserMsg('もう少し詳しく教えてください');
-      setTimeout(function(){input.focus();},300);
-    });
-    choicesEl.appendChild(otherBtn);
-    const backBtn=document.createElement('button'); backBtn.className='choice-btn';
-    backBtn.innerHTML='<span class="num back">←</span>最初に戻る';
-    backBtn.addEventListener('click',function(){ addUserMsg('最初に戻る'); showFlow('start'); });
-    choicesEl.appendChild(backBtn);
-
-    // forEach置き換えのためダミーで残す
-    const related_dummy = [];
-    related_dummy.forEach(function(r,i){
-      const rb=document.createElement('button'); rb.className='choice-btn';
-      rb.innerHTML='<span class="num">'+(i+1)+'</span>'+r.label+'について調べる';
-      rb.addEventListener('click',function(){ addUserMsg(r.label); showFlow(r.key); });
-      choicesEl.appendChild(rb);
-    });
-    const otherBtn=document.createElement('button'); otherBtn.className='choice-btn free';
-    otherBtn.innerHTML='<span class="num free-icon">✎</span>もう少し詳しく教えてください';
-    otherBtn.addEventListener('click',function(){ addUserMsg('もう少し詳しく教えてください'); setTimeout(function(){input.focus();},300); });
-    choicesEl.appendChild(otherBtn);
-    const backBtn=document.createElement('button'); backBtn.className='choice-btn';
-    backBtn.innerHTML='<span class="num back">←</span>最初に戻る';
-    backBtn.addEventListener('click',function(){ addUserMsg('最初に戻る'); showFlow('start'); });
-    choicesEl.appendChild(backBtn);
-    b.appendChild(choicesEl);
-    row.appendChild(av); row.appendChild(b); messagesEl.appendChild(row); scrollBottom();
-  } catch(err) {
-    removeTyping();
-    console.error(err);
-  }
-}
 
 function markdownToHtml(md) {
   if (!md) return '';
