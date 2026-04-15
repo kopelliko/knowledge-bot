@@ -1001,33 +1001,43 @@ function markdownToHtml(md) {
 }
 
 function findRelatedFlows(query){
-  const q = query.replace(/[？?！! 　]/g,'');
-  
-  // 完全一致チェック（1発でわかる質問）
-  const exactMatch = Object.keys(flows).find(function(key){
-    if(!key.startsWith('item_')||key.includes('_s')) return false;
-    const name = key.replace('item_','').replace(/_/g,'');
-    return name.includes(q) || q.includes(name);
-  });
-  if(exactMatch) return [{key: exactMatch, exact: true}];
+  const q = query.replace(/[？?！! 　。、]/g,'').trim();
+  if(q.length < 2) return [];
 
-  // 部署レベルで絞る
-  const deptMatches = [];
-  const deptKeywords = {
-    '発送': ['発送','梱包','スムースEC','SmoothEC','ラクマ','伝票'],
-    'バックオフィス': ['楽天','ヤフショ','Yahoo','LINE','クーポン','ポイント','バナー','キャッシュバック','ボーナス','タイムセール','出品','クロスモール','価格'],
-    '納品': ['納品','在庫'],
-    '棚卸し': ['棚卸']
-  };
-  Object.keys(deptKeywords).forEach(function(dept){
-    const keywords = deptKeywords[dept];
-    if(keywords.some(function(kw){ return q.includes(kw)||kw.includes(q); })){
-      const deptKey = 'dept_' + dept;
-      if(flows[deptKey]) deptMatches.push({key: deptKey, label: dept, exact: false});
-    }
+  const scores = {};
+
+  Object.keys(flows).forEach(function(key){
+    if(key==='start'||key==='wip'||key==='free_input') return;
+    if(key.includes('_s')) return; // セクションは除外
+    if(!key.startsWith('item_')) return;
+
+    const flow = flows[key];
+    const content = [
+      key.replace('item_','').replace(/_/g,' '),
+      flow.text||'',
+      flow.itemName||''
+    ].join(' ');
+
+    let score = 0;
+    // クエリを1文字ずつではなく単語として検索
+    const words = q.length > 4 ? [q, q.slice(0,Math.ceil(q.length/2)), q.slice(Math.ceil(q.length/2))] : [q];
+    words.forEach(function(w){
+      if(w.length < 2) return;
+      const count = (content.match(new RegExp(w,'g'))||[]).length;
+      score += count * (w.length); // 長い一致ほど高スコア
+    });
+
+    if(score > 0) scores[key] = score;
   });
-  
-  return deptMatches;
+
+  // スコア上位3件を返す
+  return Object.keys(scores)
+    .sort(function(a,b){ return scores[b]-scores[a]; })
+    .slice(0,3)
+    .map(function(key){
+      const name = key.replace('item_','').replace(/_/g,' ');
+      return {key: key, label: name, exact: scores[key] > 10};
+    });
 }
 
 sendBtn.addEventListener('click', handleSend);
