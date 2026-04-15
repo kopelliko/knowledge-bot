@@ -1100,8 +1100,60 @@ const flows = {
     ]
   },
   item_広告のブースト: {
-    get html() { return ml('https://www.canva.com/design/DAHDIyDA1gk/nj25UHYC4hhCDZ4bolyqSw/view', '広告のブーストマニュアルを開く') + canvaEmbed('https://www.canva.com/design/DAHDIyDA1gk/nj25UHYC4hhCDZ4bolyqSw/view?embed'); },
+    get html() { return '広告のブーストのどのセクションを確認しますか？' + ml('https://www.canva.com/design/DAHDIyDA1gk/nj25UHYC4hhCDZ4bolyqSw/view', '広告のブーストマニュアルを開く') + canvaEmbed('https://www.canva.com/design/DAHDIyDA1gk/nj25UHYC4hhCDZ4bolyqSw/view?embed'); },
     choices: [
+      { label: '目次 (p.2)', next: 'item_広告のブースト_s0' },
+      { label: '01 広告のブーストとは (p.3)', next: 'item_広告のブースト_s1' },
+      { label: '02 広告ブーストの日を決める (p.5-11)', next: 'item_広告のブースト_s2' },
+      { label: '03 広告ブーストの設定方法 (p.13-16)', next: 'item_広告のブースト_s3' },
+      { label: 'ヤフショに戻る', next: 'cat_バックオフィス_ヤフショ', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_広告のブースト_s0: {
+    page: '2',
+    canvaUrl: 'https://www.canva.com/design/DAHDIyDA1gk/nj25UHYC4hhCDZ4bolyqSw/view',
+    embedUrl: 'https://www.canva.com/design/DAHDIyDA1gk/nj25UHYC4hhCDZ4bolyqSw/view?embed',
+    itemName: '広告のブースト',
+    text: '01. 広告のブーストとは\n02. 広告ブーストの日を決める  \n03. 広告ブーストの設定方法',
+    choices: [
+      { label: '広告のブーストに戻る', next: 'item_広告のブースト', back: true },
+      { label: 'ヤフショに戻る', next: 'cat_バックオフィス_ヤフショ', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_広告のブースト_s1: {
+    page: '3',
+    canvaUrl: 'https://www.canva.com/design/DAHDIyDA1gk/nj25UHYC4hhCDZ4bolyqSw/view',
+    embedUrl: 'https://www.canva.com/design/DAHDIyDA1gk/nj25UHYC4hhCDZ4bolyqSw/view?embed',
+    itemName: '広告のブースト',
+    text: 'ヤフーショッピングの広告は通常は日額予算10,000円でかけています。\n\nセールなどの人がモールに集まる日にだけ日額の予算を50,000円に設定することを**広告のブースト**と呼んでいます。\n\nブーストをかけることで予算の制限を上げて、より多くのお客様に当店の商品を見てもらうことが目的です。',
+    choices: [
+      { label: '広告のブーストに戻る', next: 'item_広告のブースト', back: true },
+      { label: 'ヤフショに戻る', next: 'cat_バックオフィス_ヤフショ', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_広告のブースト_s2: {
+    page: '5-11',
+    canvaUrl: 'https://www.canva.com/design/DAHDIyDA1gk/nj25UHYC4hhCDZ4bolyqSw/view',
+    embedUrl: 'https://www.canva.com/design/DAHDIyDA1gk/nj25UHYC4hhCDZ4bolyqSw/view?embed',
+    itemName: '広告のブースト',
+    text: '### 前提条件\n\n1. 広告費はなるべく抑えたい\n2. イベント時などにブーストをかけてより多くのお客様に露出を増やしたい\n\n**ポイント還元率が12倍以上の日だけブーストをかける**\n\nこの目線でカレンダーを見ていきましょう。\n\n### ブースト設定の手順\n\n1. イベントカレンダーシートの設定したい月を開く\n2. **合計ポイント倍率が12以上（12も含む）になる日だけブーストします**\n3. **ただし、ボーナスストアの部分は注意が必要**\n   - 合計倍率はボーナスストア分も含めての倍率が記載されています\n   - 実際にボーナスストアのポイントが還元されるのは、ボーナスストアに参加した場合のみです\n\n### 判定ルール\n\n- **ボーナスストアに参加していない場合**: 実際の合計ポイント倍率は表示より低くなります（ブースト対象外）\n- **ボーナスストア参加している場合**: 合計ポイント倍率は表の通りになります（ブースト対象）\n\n### 設定方法\n\n1. 合計ポイント倍率が12以上の日に●をつける\n2. そこからボーナスストアに参加していない日を除外する（○）\n\n結果、ブーストの設定は●がついた日のみとなります。',
+    choices: [
+      { label: '広告のブーストに戻る', next: 'item_広告のブースト', back: true },
+      { label: 'ヤフショに戻る', next: 'cat_バックオフィス_ヤフショ', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_広告のブースト_s3: {
+    page: '13-16',
+    canvaUrl: 'https://www.canva.com/design/DAHDIyDA1gk/nj25UHYC4hhCDZ4bolyqSw/view',
+    embedUrl: 'https://www.canva.com/design/DAHDIyDA1gk/nj25UHYC4hhCDZ4bolyqSw/view?embed',
+    itemName: '広告のブースト',
+    text: '### 設定手順\n\n1. **コマースアド**を開きます\n2. **ブースト**をクリック\n3. **ブースト予約を追加**をクリック\n4. 日別予約で1日ずつ設定していきます：\n   - **日付**: ブーストしたい日\n   - **予算**: 50,000円（5万円）\n   - **⚠️ 入札価格設定は触らないでください**\n5. **設定する**ボタンをクリック\n\n### 最終確認\n\n最後に以下を確認した上で完了です：\n\n- ブースト予約一覧とカレンダーの○の位置が正しいか\n- 予算は5万円になっているか\n- 完了チェックにチェックを入れる\n- **上長に報告**して完了',
+    choices: [
+      { label: '広告のブーストに戻る', next: 'item_広告のブースト', back: true },
       { label: 'ヤフショに戻る', next: 'cat_バックオフィス_ヤフショ', back: true },
       { label: '最初に戻る', next: 'start', back: true }
     ]
