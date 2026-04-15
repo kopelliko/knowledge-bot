@@ -966,8 +966,11 @@ function markdownToHtml(md) {
 }
 
 sendBtn.addEventListener('click', handleSend);
-input.addEventListener('keydown', function(e){
-  if(e.key==='Enter'&&!e.shiftKey){
+var isComposing=false;
+input.addEventListener('compositionstart',function(){isComposing=true;});
+input.addEventListener('compositionend',function(){isComposing=false;});
+input.addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&!e.shiftKey&&!isComposing){
     e.preventDefault();
     var v=input.value;
     if(v.endsWith('\n')||v.trim()===''){handleSend();}else{input.value=v+'\n';}
