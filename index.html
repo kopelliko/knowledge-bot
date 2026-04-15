@@ -937,13 +937,70 @@ async function handleSend() {
     removeTyping();
     const row=document.createElement('div'); row.className='msg-row bot';
     const av=document.createElement('div'); av.className='avatar bot'; av.textContent='KB';
-    const b=document.createElement('div'); b.className='bubble bot'; b.style.whiteSpace='pre-line';
-    b.textContent = data.answer || 'エラーが発生しました。';
+    const b=document.createElement('div'); b.className='bubble bot';
+    b.innerHTML = markdownToHtml(data.answer || 'エラーが発生しました。');
     const choicesEl=document.createElement('div'); choicesEl.className='choices';
-    const btn=document.createElement('button'); btn.className='choice-btn';
-    btn.innerHTML='<span class="num back">←</span>最初に戻る';
-    btn.addEventListener('click',()=>{ addUserMsg('最初に戻る'); showFlow('start'); });
-    choicesEl.appendChild(btn); b.appendChild(choicesEl);
+    const related = findRelatedFlows(text);
+
+    if(related.length===1 && related[0].exact){
+      // 1発で特定できた → そのままフローへ
+      const rb=document.createElement('button'); rb.className='choice-btn';
+      rb.innerHTML='<span class="num">1</span>'+related[0].key.replace('item_','').replace(/_/g,' ')+'の手順を見る';
+      rb.addEventListener('click',function(){ addUserMsg('手順を見る'); showFlow(related[0].key); });
+      choicesEl.appendChild(rb);
+    } else if(related.length > 0){
+      // 部署レベルの選択肢を表示
+      const label=document.createElement('div');
+      label.style='font-size:12px;color:#888;margin-bottom:4px;';
+      label.textContent='どの業務についてですか？';
+      choicesEl.appendChild(label);
+      related.forEach(function(r,i){
+        const rb=document.createElement('button'); rb.className='choice-btn';
+        rb.innerHTML='<span class="num">'+(i+1)+'</span>'+r.label+'の作業';
+        rb.addEventListener('click',function(){ addUserMsg(r.label+'の作業'); showFlow(r.key); });
+        choicesEl.appendChild(rb);
+      });
+    } else {
+      // マッチなし → 全部署を選択肢に
+      ['dept_発送','dept_納品','dept_バックオフィス','dept_棚卸し'].forEach(function(k,i){
+        if(!flows[k]) return;
+        const rb=document.createElement('button'); rb.className='choice-btn';
+        const lbl=k.replace('dept_','');
+        rb.innerHTML='<span class="num">'+(i+1)+'</span>'+lbl+'の作業';
+        rb.addEventListener('click',function(){ addUserMsg(lbl+'の作業'); showFlow(k); });
+        choicesEl.appendChild(rb);
+      });
+    }
+
+    const otherBtn=document.createElement('button'); otherBtn.className='choice-btn free';
+    otherBtn.innerHTML='<span class="num free-icon">✎</span>もう少し詳しく教えてください';
+    otherBtn.addEventListener('click',function(){ 
+      addUserMsg('もう少し詳しく教えてください');
+      setTimeout(function(){input.focus();},300);
+    });
+    choicesEl.appendChild(otherBtn);
+    const backBtn=document.createElement('button'); backBtn.className='choice-btn';
+    backBtn.innerHTML='<span class="num back">←</span>最初に戻る';
+    backBtn.addEventListener('click',function(){ addUserMsg('最初に戻る'); showFlow('start'); });
+    choicesEl.appendChild(backBtn);
+
+    // forEach置き換えのためダミーで残す
+    const related_dummy = [];
+    related_dummy.forEach(function(r,i){
+      const rb=document.createElement('button'); rb.className='choice-btn';
+      rb.innerHTML='<span class="num">'+(i+1)+'</span>'+r.label+'について調べる';
+      rb.addEventListener('click',function(){ addUserMsg(r.label); showFlow(r.key); });
+      choicesEl.appendChild(rb);
+    });
+    const otherBtn=document.createElement('button'); otherBtn.className='choice-btn free';
+    otherBtn.innerHTML='<span class="num free-icon">✎</span>もう少し詳しく教えてください';
+    otherBtn.addEventListener('click',function(){ addUserMsg('もう少し詳しく教えてください'); setTimeout(function(){input.focus();},300); });
+    choicesEl.appendChild(otherBtn);
+    const backBtn=document.createElement('button'); backBtn.className='choice-btn';
+    backBtn.innerHTML='<span class="num back">←</span>最初に戻る';
+    backBtn.addEventListener('click',function(){ addUserMsg('最初に戻る'); showFlow('start'); });
+    choicesEl.appendChild(backBtn);
+    b.appendChild(choicesEl);
     row.appendChild(av); row.appendChild(b); messagesEl.appendChild(row); scrollBottom();
   } catch(err) {
     removeTyping();
@@ -963,6 +1020,36 @@ function markdownToHtml(md) {
     .replace(/^[-•]\s+(.+)$/gm,'<div style="margin:3px 0;padding-left:14px;line-height:1.6;">• $1</div>')
     .replace(/\n\n/g,'<br>')
     .replace(/\n/g,'<br>');
+}
+
+function findRelatedFlows(query){
+  const q = query.replace(/[？?！! 　]/g,'');
+  
+  // 完全一致チェック（1発でわかる質問）
+  const exactMatch = Object.keys(flows).find(function(key){
+    if(!key.startsWith('item_')||key.includes('_s')) return false;
+    const name = key.replace('item_','').replace(/_/g,'');
+    return name.includes(q) || q.includes(name);
+  });
+  if(exactMatch) return [{key: exactMatch, exact: true}];
+
+  // 部署レベルで絞る
+  const deptMatches = [];
+  const deptKeywords = {
+    '発送': ['発送','梱包','スムースEC','SmoothEC','ラクマ','伝票'],
+    'バックオフィス': ['楽天','ヤフショ','Yahoo','LINE','クーポン','ポイント','バナー','キャッシュバック','ボーナス','タイムセール','出品','クロスモール','価格'],
+    '納品': ['納品','在庫'],
+    '棚卸し': ['棚卸']
+  };
+  Object.keys(deptKeywords).forEach(function(dept){
+    const keywords = deptKeywords[dept];
+    if(keywords.some(function(kw){ return q.includes(kw)||kw.includes(q); })){
+      const deptKey = 'dept_' + dept;
+      if(flows[deptKey]) deptMatches.push({key: deptKey, label: dept, exact: false});
+    }
+  });
+  
+  return deptMatches;
 }
 
 sendBtn.addEventListener('click', handleSend);
