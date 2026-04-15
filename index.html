@@ -1520,17 +1520,64 @@ async function handleSend() {
 
 function markdownToHtml(md) {
   if (!md) return '';
-  return md
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-    .replace(/\*\*(.+?)\*\*/g,'<span style="color:#0F6E56;font-weight:600;">$1</span>')
-    .replace(/^#{4}\s+(.+?)(?:\s*&lt;!--\s*page:([\d\-]+)\s*--&gt;)?$/gm, function(m,t,p){ return '<div style="font-size:12px;font-weight:700;color:#555;margin:8px 0 3px;padding-left:12px;border-left:2px solid #ccc;">' + t + (p ? ' <span style="font-size:11px;color:#1D9E75;background:#E1F5EE;padding:1px 6px;border-radius:4px;margin-left:4px;">p.' + p + '</span>' : '') + '</div>'; })
-    .replace(/^#{3}\s+(.+?)(?:\s*&lt;!--\s*page:([\d\-]+)\s*--&gt;)?$/gm, function(m,t,p){ return '<div style="font-size:13px;font-weight:700;color:#1a1a1a;margin:10px 0 4px;border-left:3px solid #1D9E75;padding-left:8px;">' + t + (p ? ' <span style="font-size:11px;color:#1D9E75;background:#E1F5EE;padding:1px 6px;border-radius:4px;margin-left:4px;">p.' + p + '</span>' : '') + '</div>'; })
-    .replace(/^#{2}\s+(.+?)(?:\s*&lt;!--\s*page:([\d\-]+)\s*--&gt;)?$/gm, function(m,t,p){ return '<div style="font-size:14px;font-weight:700;color:#0F6E56;margin:12px 0 6px;">' + t + (p ? ' <span style="font-size:11px;color:#1D9E75;background:#E1F5EE;padding:1px 6px;border-radius:4px;margin-left:4px;">p.' + p + '</span>' : '') + '</div>'; })
-    .replace(/^(\d+)\.\s+(.+)$/gm,'<div style="display:flex;gap:8px;margin:5px 0;align-items:flex-start;"><span style="background:#1D9E75;color:white;border-radius:50%;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;">$1</span><span style="line-height:1.6;">$2</span></div>')
-    .replace(/^[-•]\s+(.+)$/gm,'<div style="margin:3px 0;padding-left:14px;line-height:1.6;">• $1</div>')
-    .replace(/!\[([^\]]*)\]\((https?:\/\/[^\)]+)\)/g, '<img src="$2" alt="$1" style="max-width:100%;border-radius:12px;margin-top:10px;">')
-    .replace(/\n\n/g,'<br>')
-    .replace(/\n/g,'<br>');
+
+  let html = md
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+
+    // 太字
+    .replace(/**(.+?)**/g,'<span style="color:#0F6E56;font-weight:600;">$1</span>')
+
+    // 見出し
+    .replace(/^#{4}s+(.+?)(?:s*&lt;!--s*page:([d-]+)s*--&gt;)?$/gm, function(m,t,p){
+      return '<div style="font-size:12px;font-weight:700;color:#555;margin:8px 0 3px;padding-left:12px;border-left:2px solid #ccc;">' +
+        t + (p ? ' <span style="font-size:11px;color:#1D9E75;background:#E1F5EE;padding:1px 6px;border-radius:4px;margin-left:4px;">p.' + p + '</span>' : '') +
+        '</div>';
+    })
+    .replace(/^#{3}s+(.+?)(?:s*&lt;!--s*page:([d-]+)s*--&gt;)?$/gm, function(m,t,p){
+      return '<div style="font-size:13px;font-weight:700;color:#1a1a1a;margin:10px 0 4px;border-left:3px solid #1D9E75;padding-left:8px;">' +
+        t + (p ? ' <span style="font-size:11px;color:#1D9E75;background:#E1F5EE;padding:1px 6px;border-radius:4px;margin-left:4px;">p.' + p + '</span>' : '') +
+        '</div>';
+    })
+    .replace(/^#{2}s+(.+?)(?:s*&lt;!--s*page:([d-]+)s*--&gt;)?$/gm, function(m,t,p){
+      return '<div style="font-size:14px;font-weight:700;color:#0F6E56;margin:12px 0 6px;">' +
+        t + (p ? ' <span style="font-size:11px;color:#1D9E75;background:#E1F5EE;padding:1px 6px;border-radius:4px;margin-left:4px;">p.' + p + '</span>' : '') +
+        '</div>';
+    })
+
+    // 番号リスト
+    .replace(/^(d+).s+(.+)$/gm,
+      '<div style="display:flex;gap:8px;margin:5px 0;align-items:flex-start;"><span style="background:#1D9E75;color:white;border-radius:50%;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;">$1</span><span style="line-height:1.6;">$2</span></div>'
+    )
+
+    // 箇条書き
+    .replace(/^[-•]s+(.+)$/gm,'<div style="margin:3px 0;padding-left:14px;line-height:1.6;">• $1</div>')
+
+    // Markdown画像
+    .replace(/![([^]]*)]((https?://[^)]+))/g,
+      '<img src="$2" alt="$1" style="max-width:100%;border-radius:12px;margin-top:10px;">'
+    )
+
+    // Google Drive の画像URL単体も画像表示にする
+    .replace(
+      /(https://drive.google.com/uc?export=view&amp;id=[a-zA-Z0-9_-]+)/g,
+      '<img src="$1" alt="image" style="max-width:100%;border-radius:12px;margin-top:10px;">'
+    )
+
+    // jpg/png/webp/gif の直リンクも画像表示
+    .replace(
+      /(https?://[^s<]+?.(?:png|jpg|jpeg|gif|webp))/gi,
+      '<img src="$1" alt="image" style="max-width:100%;border-radius:12px;margin-top:10px;">'
+    )
+
+    .replace(/
+
+/g,'<br>')
+    .replace(/
+/g,'<br>');
+
+  return html;
 }
 
 function findRelatedFlows(query){
@@ -1577,11 +1624,12 @@ sendBtn.addEventListener('click', handleSend);
 var isComposing=false;
 input.addEventListener('compositionstart',function(){isComposing=true;});
 input.addEventListener('compositionend',function(){isComposing=false;});
-input.addEventListener('keydown',function(e){
-  if(e.key==='Enter'&&!e.shiftKey&&!isComposing){
+input.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey && !isComposing) {
     e.preventDefault();
-    var v=input.value;
-    if(v.endsWith('\n')||v.trim()===''){handleSend();}else{input.value=v+'\n';}
+    if (input.value.trim() !== '') {
+      handleSend();
+    }
   }
 });
 showFlow('start');
