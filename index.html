@@ -167,8 +167,112 @@ const flows = {
     ]
   },
   item_出品方法: {
-    get html() { return ml('https://www.canva.com/design/DAFdsTQ5kow/1R1klicDmm0mql3NDv6bbg/view', '出品方法マニュアルを開く') + canvaEmbed('https://www.canva.com/design/DAFdsTQ5kow/1R1klicDmm0mql3NDv6bbg/view?embed'); },
+    get html() { return '出品方法のどのセクションを確認しますか？' + ml('https://www.canva.com/design/DAFdsTQ5kow/1R1klicDmm0mql3NDv6bbg/view', '出品方法マニュアルを開く') + canvaEmbed('https://www.canva.com/design/DAFdsTQ5kow/1R1klicDmm0mql3NDv6bbg/view?embed'); },
     choices: [
+      { label: '基本的な出品手順 (p.2)', next: 'item_出品方法_s0' },
+      { label: '過去の出品履歴確認 (p.3)', next: 'item_出品方法_s1' },
+      { label: '過去に出品した商品の場合 (p.4-6)', next: 'item_出品方法_s2' },
+      { label: 'ラクマ出品方法 (p.7-14)', next: 'item_出品方法_s3' },
+      { label: '過去に出品がない場合 (p.15-34)', next: 'item_出品方法_s4' },
+      { label: '訳あり品（商品に何かしら付箋がある）箱無し品の場合 (p.36-42)', next: 'item_出品方法_s5' },
+      { label: 'ラクマの価格改定 (p.43-46)', next: 'item_出品方法_s6' },
+      { label: '補足事項 (p.47)', next: 'item_出品方法_s7' },
+      { label: 'ラクマ出品に戻る', next: 'cat_発送_ラクマ出品', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_出品方法_s0: {
+    page: '2',
+    canvaUrl: 'https://www.canva.com/design/DAFdsTQ5kow/1R1klicDmm0mql3NDv6bbg/view',
+    embedUrl: 'https://www.canva.com/design/DAFdsTQ5kow/1R1klicDmm0mql3NDv6bbg/view?embed',
+    itemName: '出品方法',
+    text: '棚の「ラクマ出品まだ」からピックアップする\n「これを出品して」と指示があればそれをする',
+    choices: [
+      { label: '出品方法に戻る', next: 'item_出品方法', back: true },
+      { label: 'ラクマ出品に戻る', next: 'cat_発送_ラクマ出品', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_出品方法_s1: {
+    page: '3',
+    canvaUrl: 'https://www.canva.com/design/DAFdsTQ5kow/1R1klicDmm0mql3NDv6bbg/view',
+    embedUrl: 'https://www.canva.com/design/DAFdsTQ5kow/1R1klicDmm0mql3NDv6bbg/view?embed',
+    itemName: '出品方法',
+    text: '1. スタッフさんシートの「ラクマ出品」で過去に同じ商品が出品されたことがないか確認\n2. **Ctrl（またはCommand）＋F**で検索できるので商品のパッケージを見て商品名、メーカー名等を検索',
+    choices: [
+      { label: '出品方法に戻る', next: 'item_出品方法', back: true },
+      { label: 'ラクマ出品に戻る', next: 'cat_発送_ラクマ出品', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_出品方法_s2: {
+    page: '4-6',
+    canvaUrl: 'https://www.canva.com/design/DAFdsTQ5kow/1R1klicDmm0mql3NDv6bbg/view',
+    embedUrl: 'https://www.canva.com/design/DAFdsTQ5kow/1R1klicDmm0mql3NDv6bbg/view?embed',
+    itemName: '出品方法',
+    text: '### 写真と値段と商品説明は使い回してOK <!-- page:4 -->\n\n検索して該当があった場合（過去に出品したことあり）\n- 商品名（A列）\n- 販売価格（B列）  \n- 商品説明（D列）\n\n### 写真の取得方法 <!-- page:5-6 -->\n\n過去にうちがラクマに出品した際の画像を取得していきます。\n\n1. **スタッフさんシートのE列にURLがあればそこをクリック**\n2. **↓のように訳ありなどで撮り直し指示がある場合はすでにあるリンクをクリック**\n3. **リンクがない場合P15〜P17を参考にして撮影し直す**\n\n#### 画像ダウンロード手順\n1. 商品ページが開くので画像をクリックして以下の画像の状態にします\n2. **上から順番にダブルクリックで画像がダウンロードフォルダにダウンロードされます**\n3. 撮り直し指示がある場合は使いまわせる画像だけダウンロードして、そのほかの画像が必要な場合改めて撮影します（方法はP15~P17参照）',
+    choices: [
+      { label: '出品方法に戻る', next: 'item_出品方法', back: true },
+      { label: 'ラクマ出品に戻る', next: 'cat_発送_ラクマ出品', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_出品方法_s3: {
+    page: '7-14',
+    canvaUrl: 'https://www.canva.com/design/DAFdsTQ5kow/1R1klicDmm0mql3NDv6bbg/view',
+    embedUrl: 'https://www.canva.com/design/DAFdsTQ5kow/1R1klicDmm0mql3NDv6bbg/view?embed',
+    itemName: '出品方法',
+    text: '### 出品開始 <!-- page:7 -->\n右下の「出品」をクリック\n\n### 商品画像の設定 <!-- page:8 -->\n「画像を選択する」に最初に撮影もしくはダウンロードした写真をドラッグ＆ドロップする\n（アップしたあとで順番の入れ替えも可能）\n\n### 商品名の設定 <!-- page:9 -->\nラクマ出品シートのA列\n\n### カテゴリ・ブランドの設定 <!-- page:10 -->\n- **カテゴリーを選ぶ**（そんなに厳密に考えなくてもだいたいで大丈夫。ただ何に使うものか全く検討がつかない時などは同じ商品を出品してる他の人のページを見ると参考になる）\n- **ブランドは空欄でOK**\n\n### 商品説明 <!-- page:11 -->\nラクマ出品シートのA列\n\n### 商品の状態 <!-- page:12 -->\n- **やや傷や汚れありから上のコンディションを状態に合わせて選択する**\n- 数回使用した程度のものが多いため、**基本的に製品に不良がない場合は【未使用に近い】を選択する**\n\n### その他の設定 <!-- page:13 -->\n- **配送料の負担：送料込み（出品者が負担）**\n- **配送方法：未定**\n- **発送日の目安：支払い後2-3日で発送**\n- **発送元の地域：兵庫県**\n- **購入申請：なし**\n- **販売価格：ラクマ出品シートB列**\n- ↓「確認する」\n\n### 完了 <!-- page:14 -->\n1. 商品を「ラクマ出品済み」の棚に置いて完了です！\n2. **E列が「訳あり」や空欄になっていたらP37を参考にして商品ページのURLをE列に上書きしてください**',
+    choices: [
+      { label: '出品方法に戻る', next: 'item_出品方法', back: true },
+      { label: 'ラクマ出品に戻る', next: 'cat_発送_ラクマ出品', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_出品方法_s4: {
+    page: '15-34',
+    canvaUrl: 'https://www.canva.com/design/DAFdsTQ5kow/1R1klicDmm0mql3NDv6bbg/view',
+    embedUrl: 'https://www.canva.com/design/DAFdsTQ5kow/1R1klicDmm0mql3NDv6bbg/view?embed',
+    itemName: '出品方法',
+    text: '過去に出品した事があるものと比較して以下の手順が増えます。\n- 写真の撮影\n- 商品名の設定\n- 商品説明の設定\n- 出品価格の設定\n\n### 写真の撮影 <!-- page:16-18 -->\n\n自分のスマホで商品の写真を撮る\n以下の構成でお願いします。\n\n1. **商品パッケージの写真**（商品が大きく写るように）\n2. **全ての付属品とパッケージが並んだ写真**\n3. **商品本体の前面と背面の写真**\n\n#### 撮影の際の注意 <!-- page:17 -->\n- **※レビューシールや楽天に納品する際のバーコードシール等が貼ってある場合は写真を撮る前に剥がしておく**\n- きれいに剥がれない場合はドライヤーを当てながらはがすとはがしやすいです\n- **※同じ商品が複数あるものは毎回撮影する必要はありません。ラクマの出品履歴から商品画像を取得してください（P5からの手順です）**\n\n#### チャットワークで写真を送る <!-- page:18 -->\n1. **「マイチャット」を使い写真をアップロード**\n2. **PCに画像が同期されるのでダウンロード**（このファイル名をクリック）\n\n### 商品名の設定方法 <!-- page:19-23 -->\n\n#### 楽天管理画面からの商品名取得 <!-- page:19-21 -->\n1. https://item.rms.rakuten.co.jp/rms-item/shops/390078/items にアクセスしてログイン\n2. **店舗設定をクリック→商品管理をクリック**\n3. **ブランド名などでキーワード検索**\n4. **検索ボタンを押す**\n5. **該当の商品の名前をクリック**\n6. **楽天でのうちの販売ページが表示されるので、商品名を全てコピー→ラクマの商品名の部分に貼り付け**\n\n#### 商品名の編集 <!-- page:22-23 -->\n1. **ラクマは40文字までしか商品名を設定できないので不要な部分を削除**\n2. **保証の文言、キャンペーン、即日発送等削除。**\n3. **頭から順番に重要なキーワードなので、今回の場合以下の赤文字を削除していく**\n4. **ブランド名の日本語がある場合は優先して残す**\n5. **完成した商品名をスタッフシートのラクマシートのA列に入力**\n\n### 商品の説明 <!-- page:24-26 -->\n\n#### 説明文の作成 <!-- page:24 -->\n楽天の商品名からキャンペーン、保証、即日発送等の不要な文言を消したもの＋以下の定型文を商品ページに記載。\n\n**定型文：**\n- 外箱だけ開封しました。または 数回だけ使用しました。のどちらかを商品に合わせて入れる\n- 恐れ入りますがお値下げの交渉にはお返事できません。\n- 在庫はありますので即購入可能です。m(_ _)m\n\n**※オーラルケア用品など未使用じゃないとおかしいものは「数回だけ使用しました」の部分を「新品未使用です。外箱だけ開封しました」など商品や状態に応じて適宜変更してください**\n\n#### 完成した商品説明をスタッフシートの【ラクマ】シートのD列に入力 <!-- page:26 -->\n\n### 出品価格を決める <!-- page:27-33 -->\n\nでの出品価格は以下の様に決めます\n**楽天の新品の販売価格の75%の価格**\n\n#### 楽天の価格調査 <!-- page:28-31 -->\n1. **楽天の管理画面(RMS)にログインします**\n2. **※パスワードが不明な場合はスタッフさん用のパスワードシートを確認してください**\n3. **店舗設定→商品管理をクリックします**\n4. **商品一覧・登録をクリックします**\n5. **この画面で弊社が楽天で扱っている全商品が確認できます**\n6. **商品のパッケージからブランド名っぽい文言を探して、楽天の検索窓に入力します**\n\n#### 価格計算例 <!-- page:31 -->\n- **在庫数の欄（青い四角の部分）に⌄の記号がある場合はバリエーションがある商品です**\n- **⌄のボタンを押すと緑の四角の部分が表示されます**\n- **2980円の75%は2980×0.75=2235**\n- **1の位は切り捨てで2230円が今回の出品価格になります**\n\n**万が一楽天での出品が見つからない場合は声をかけてください。** <!-- page:32 -->\n\n#### 出品価格をスタッフシートの【ラクマ】シートのB列に入力 <!-- page:33 -->\n\n### ここまでで写真,商品名,販売価格が揃ったのでP7から出品作業を進める <!-- page:34 -->\n\n### URLの記録 <!-- page:35 -->\n1. **出品が終わったら「出品した商品を見る」をクリック**\n2. **でてきたページのURLをスタッフさんシートのE列にコピペする**\n3. **※忘れていた場合はアカウント名→出品した商品からも出品ページのURLが見られます**\n4. **初めて出品したものが傷があるなど訳あり品の場合写真を次回に使えない画像もあるので「訳あり」の旨とリンクを書く**',
+    choices: [
+      { label: '出品方法に戻る', next: 'item_出品方法', back: true },
+      { label: 'ラクマ出品に戻る', next: 'cat_発送_ラクマ出品', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_出品方法_s5: {
+    page: '36-42',
+    canvaUrl: 'https://www.canva.com/design/DAFdsTQ5kow/1R1klicDmm0mql3NDv6bbg/view',
+    embedUrl: 'https://www.canva.com/design/DAFdsTQ5kow/1R1klicDmm0mql3NDv6bbg/view?embed',
+    itemName: '出品方法',
+    text: '過去に出品した事があるものと比較して以下の手順が増えます。\n- 写真の撮影（見た目の訳ありの場合はその箇所も写真を撮る）\n- 商品名の頭に番号をつける\n- 商品詳細に不良の内容を書く\n- 出品価格の設定\n\n**※ここでは便宜上特に問題のない商品を「訳なし」と呼びます**\n\n### 写真の撮影 <!-- page:37 -->\nP24に加えて不良箇所の写真を撮ります。\n**※（電源が付かないないなど、見た目以外の不良は特に撮影する箇所はありません。）**\n**箱に破れ、凹み、商品本体に傷などがある場合はその箇所を撮影**\n\n### 商品名の頭に番号をつける <!-- page:38-39 -->\n1. **商品名をつける際に頭に出品した日付を記入**（売れた際にどの訳ありが売れたのかわかるように）\n2. **例：9月10日に出品した場合 →商品名の頭に0910と半角スペースを入れる**\n3. **日付の数字を書いた付箋を貼っておく**\n4. **はがれないように上からマステを貼ってください**\n\n### 商品詳細に不良の内容を書く <!-- page:40-41 -->\n1. **ラクマの商品の説明欄に不良の内容を自分で追記します**\n2. **何か不良がある場合、シートの価格や自分が設定した価格よりも100円下げて販売する**\n3. **1800円で販売する商品の場合、訳がある商品は1700円で設定**\n\n### 写真,販売価格,商品名が揃ったのでP7から出品作業を進める <!-- page:42 -->',
+    choices: [
+      { label: '出品方法に戻る', next: 'item_出品方法', back: true },
+      { label: 'ラクマ出品に戻る', next: 'cat_発送_ラクマ出品', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_出品方法_s6: {
+    page: '43-46',
+    canvaUrl: 'https://www.canva.com/design/DAFdsTQ5kow/1R1klicDmm0mql3NDv6bbg/view',
+    embedUrl: 'https://www.canva.com/design/DAFdsTQ5kow/1R1klicDmm0mql3NDv6bbg/view?embed',
+    itemName: '出品方法',
+    text: '### 価格改定の実施 <!-- page:44-46 -->\n**毎週1度ラクマの出品済み商品の価格を全て100円ずつ下げてください。**\n\n1. アカウント名→出品した商品をクリック\n2. **商品一覧の上から順番に100円下げていきます**\n3. **商品をクリック→**\n4. **商品の編集をクリック→値段を100円下げて変更するをクリック。これで完了です。**',
+    choices: [
+      { label: '出品方法に戻る', next: 'item_出品方法', back: true },
+      { label: 'ラクマ出品に戻る', next: 'cat_発送_ラクマ出品', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_出品方法_s7: {
+    page: '47',
+    canvaUrl: 'https://www.canva.com/design/DAFdsTQ5kow/1R1klicDmm0mql3NDv6bbg/view',
+    embedUrl: 'https://www.canva.com/design/DAFdsTQ5kow/1R1klicDmm0mql3NDv6bbg/view?embed',
+    itemName: '出品方法',
+    text: '- **rシートへの入力は過去に出品した事がないものだけ**（訳ありとかは入力不要）\n- **出品した日や担当の名前不要**',
+    choices: [
+      { label: '出品方法に戻る', next: 'item_出品方法', back: true },
       { label: 'ラクマ出品に戻る', next: 'cat_発送_ラクマ出品', back: true },
       { label: '最初に戻る', next: 'start', back: true }
     ]
