@@ -1041,8 +1041,73 @@ const flows = {
     ]
   },
   item_爆買いWEEK: {
-    get html() { return ml('https://www.canva.com/design/DAHCyYkNl78/3RMyrnF0PX8hEeCMyVGrXg/view', '爆買いWEEKマニュアルを開く') + canvaEmbed('https://www.canva.com/design/DAHCyYkNl78/3RMyrnF0PX8hEeCMyVGrXg/view?embed'); },
+    get html() { return '爆買いWEEKのどのセクションを確認しますか？' + ml('https://www.canva.com/design/DAHCyYkNl78/3RMyrnF0PX8hEeCMyVGrXg/view', '爆買いWEEKマニュアルを開く') + canvaEmbed('https://www.canva.com/design/DAHCyYkNl78/3RMyrnF0PX8hEeCMyVGrXg/view?embed'); },
     choices: [
+      { label: '目次 (p.2)', next: 'item_爆買いWEEK_s0' },
+      { label: '01 爆買いWEEKとは (p.3-5)', next: 'item_爆買いWEEK_s1' },
+      { label: '04 設定のタイミング (p.7)', next: 'item_爆買いWEEK_s2' },
+      { label: '02 爆買いWEEK前の設定 (p.8-13)', next: 'item_爆買いWEEK_s3' },
+      { label: '03 爆買いWEEK後の設定 (p.15-19)', next: 'item_爆買いWEEK_s4' },
+      { label: 'ヤフショに戻る', next: 'cat_バックオフィス_ヤフショ', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_爆買いWEEK_s0: {
+    page: '2',
+    canvaUrl: 'https://www.canva.com/design/DAHCyYkNl78/3RMyrnF0PX8hEeCMyVGrXg/view',
+    embedUrl: 'https://www.canva.com/design/DAHCyYkNl78/3RMyrnF0PX8hEeCMyVGrXg/view?embed',
+    itemName: '爆買いWEEK',
+    text: '01. 爆買いWEEKとは\n02. 爆買いWEEK前の設定\n03. 爆買いWEEK後の設定',
+    choices: [
+      { label: '爆買いWEEKに戻る', next: 'item_爆買いWEEK', back: true },
+      { label: 'ヤフショに戻る', next: 'cat_バックオフィス_ヤフショ', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_爆買いWEEK_s1: {
+    page: '3-5',
+    canvaUrl: 'https://www.canva.com/design/DAHCyYkNl78/3RMyrnF0PX8hEeCMyVGrXg/view',
+    embedUrl: 'https://www.canva.com/design/DAHCyYkNl78/3RMyrnF0PX8hEeCMyVGrXg/view?embed',
+    itemName: '爆買いWEEK',
+    text: 'Yahoo!ショッピングで開催される「爆買WEEK」は、対象ストアで期間中に合計5,000円（税込）以上など複数点まとめ買いをするとポイント還元率アップやクーポンなどの特典が受けられる大型キャンペーンです。\n\n### 作業の目的\n\nこれからする作業は商品タグと商品説明欄にそれぞれキーワードをCSVで差し込む作業です。\n\nこの作業をすることでヤフショの特設ページに掲載される可能があり、ストアへの新たな動線を増やすことが目的です。\n\n### 掲載条件\n\n掲載条件を満たした商品は、カテゴリ毎のテーマページに掲載予定\n\n**掲載条件：**\n- 対象：プロモーションパッケージストア対象\n- キーワード：爆買\n- 商品タグ：bakugai202602\n\n**注意事項：**\n- ※すべてを満たす事が表示条件\n- ※キーワードの設置個所は①商品名 ②商品詳細など【検索対象】に入れる必要があります\n- ※キーワードと商品タグ 両方の設定が必要となります',
+    choices: [
+      { label: '爆買いWEEKに戻る', next: 'item_爆買いWEEK', back: true },
+      { label: 'ヤフショに戻る', next: 'cat_バックオフィス_ヤフショ', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_爆買いWEEK_s2: {
+    page: '7',
+    canvaUrl: 'https://www.canva.com/design/DAHCyYkNl78/3RMyrnF0PX8hEeCMyVGrXg/view',
+    embedUrl: 'https://www.canva.com/design/DAHCyYkNl78/3RMyrnF0PX8hEeCMyVGrXg/view?embed',
+    itemName: '爆買いWEEK',
+    text: '### 文言追加の作業：\n**基本はボーナスストア参加日の前日にお願いします。**\n例えば日曜日にボーナスストアに参加している場合は金曜日に設定する。\n\n### 文言削除の作業：\n**基本はボーナスストア参加日の翌日に削除をお願いします。**\n例えば土曜日にボーナスストアに参加している場合は月曜日に削除する。',
+    choices: [
+      { label: '爆買いWEEKに戻る', next: 'item_爆買いWEEK', back: true },
+      { label: 'ヤフショに戻る', next: 'cat_バックオフィス_ヤフショ', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_爆買いWEEK_s3: {
+    page: '8-13',
+    canvaUrl: 'https://www.canva.com/design/DAHCyYkNl78/3RMyrnF0PX8hEeCMyVGrXg/view',
+    embedUrl: 'https://www.canva.com/design/DAHCyYkNl78/3RMyrnF0PX8hEeCMyVGrXg/view?embed',
+    itemName: '爆買いWEEK',
+    text: '### 手順\n\n1. イベントカレンダーシートを開きます\n2. 『爆買いWEEKのタグ追加』シートを開きます\n3. 上部のメニューバーの"スクリプト処理"をクリック\n4. 【爆買いWEEK】タグの設定をクリック\n5. 文言を追加をクリック\n\n### ポップアップでのタグ設定\n\nこのようなポップアップが出てきます。\nここに『今回の爆買WEEKに合わせたタグ』を打ち込みます\n\n**⚡ 重要な注意事項：**\n- このタグの文言は毎回変わります\n- ヤフショの担当から送られてきますので今回の文言が何かを上長に確認してください\n- その文言をそのままコピーしてポップアップに貼り付けてください\n- **（手打ちはせず、半角スペースが入っていないかなども慎重に確認をお願いします）**\n\n### CSVダウンロード\n\n6. CSVダウンロードボタンを押す\n7. ドライブのダウンロードボタンを押す\n\n### ストアクリエイターproでのアップロード\n\n8. ストアクリエイターpro上でダウンロードしたファイルをアップロードします\n9. 商品登録→商品管理をクリックします\n\n### アップロード設定\n\n**⚡ 重要：アップロードタイプは一切触らないでください**\n"項目指定"がデフォルトで、そのままでOKです\n\n10. ファイルを選択ボタンを押す\n11. 先ほどダウンロードした以下のファイルを選択\n    - ヤフショoption**追加**_◯◯◯◯◯◯◯◯.csv\n    - **（追加になっていることを確認）**\n12. アップロードボタンを押す\n\n### 最終処理\n\n13. 最後に読込ボタンを押してオプションの追加設定は完了です\n\n**最後にBOチームのチャットワークグループで設定が完了した旨を上長に報告してください。**',
+    choices: [
+      { label: '爆買いWEEKに戻る', next: 'item_爆買いWEEK', back: true },
+      { label: 'ヤフショに戻る', next: 'cat_バックオフィス_ヤフショ', back: true },
+      { label: '最初に戻る', next: 'start', back: true }
+    ]
+  },
+  item_爆買いWEEK_s4: {
+    page: '15-19',
+    canvaUrl: 'https://www.canva.com/design/DAHCyYkNl78/3RMyrnF0PX8hEeCMyVGrXg/view',
+    embedUrl: 'https://www.canva.com/design/DAHCyYkNl78/3RMyrnF0PX8hEeCMyVGrXg/view?embed',
+    itemName: '爆買いWEEK',
+    text: '手順はオプション文言追加の際とほとんど同じです\n\n### 手順\n\n1. 上部のメニューバーの"スクリプト処理"をクリック\n2. 【爆買いWEEK】タグの設定をクリック\n3. **文言を削除**をクリック\n\n### CSVダウンロード\n\n4. CSVダウンロードボタンを押す\n5. ドライブのダウンロードボタンを押す\n\n### ストアクリエイターproでのアップロード\n\n6. ストアクリエイターpro上でダウンロードしたファイルをアップロードします\n7. 商品登録→商品管理をクリックします\n\n### アップロード設定\n\n**⚡ アップロードタイプは一切触らないでください**\n項目指定がデフォルトで、そのままでOKです\n\n8. ファイルを選択ボタンを押す\n9. 先ほどダウンロードした以下のファイルを選択\n   - ヤフショoption**削除**_◯◯◯◯◯◯◯◯.csv\n   - **（削除になっていることを確認）**\n10. アップロードボタンを押す\n\n### 最終処理\n\n11. 最後に読込ボタンを押してオプションの追加設定は完了です\n\n**最後にBOチームのチャットワークグループで設定が完了した旨を上長に報告してください。**',
+    choices: [
+      { label: '爆買いWEEKに戻る', next: 'item_爆買いWEEK', back: true },
       { label: 'ヤフショに戻る', next: 'cat_バックオフィス_ヤフショ', back: true },
       { label: '最初に戻る', next: 'start', back: true }
     ]
