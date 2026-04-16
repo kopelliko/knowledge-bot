@@ -1403,7 +1403,7 @@ function removeTyping() { const t=document.getElementById('typing-row'); if(t) t
 
 function addUserMsg(text) {
   const row=document.createElement('div'); row.className='msg-row user';
-  const av=document.createElement('div'); av.className='avatar user'; av.textContent='あ';
+  const av=document.createElement('div'); av.className='avatar user'; av.textContent='';
   const b=document.createElement('div'); b.className='bubble user'; b.style.whiteSpace='pre-line'; b.textContent=text;
   row.appendChild(av); row.appendChild(b); messagesEl.appendChild(row); scrollBottom();
 }
