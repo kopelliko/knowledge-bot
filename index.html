@@ -1480,10 +1480,10 @@ async function handleSend() {
   conversation_id: conversationId
 })
     });
-        const data = await res.json();
+            const data = await res.json();
     conversationId = data.conversation_id || '';
 
-    // 未回答ならQ&Aシートに記録
+    // 未回答ならQ&Aシートに保存
     try {
       await fetch(GAS_PROXY, {
         method: 'POST',
@@ -1494,8 +1494,8 @@ async function handleSend() {
           answer: data.answer || ''
         })
       });
-    } catch(logErr) {
-      console.error('未回答ログ記録エラー', logErr);
+    } catch (logErr) {
+      console.error('未回答ログ保存エラー', logErr);
     }
 
     removeTyping();
@@ -1503,6 +1503,8 @@ async function handleSend() {
     const av=document.createElement('div'); av.className='avatar bot'; av.innerHTML='<img src="' + KOKOPELLI_ICON + '" class="avatar-img">';
     const b=document.createElement('div'); b.className='bubble bot';
     b.innerHTML = markdownToHtml(data.answer || 'エラーが発生しました。');
+
+
     const choicesEl=document.createElement('div'); choicesEl.className='choices';
     const related = [];
 
