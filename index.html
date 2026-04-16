@@ -1480,8 +1480,24 @@ async function handleSend() {
   conversation_id: conversationId
 })
     });
-    const data = await res.json();
+        const data = await res.json();
     conversationId = data.conversation_id || '';
+
+    // 未回答ならQ&Aシートに記録
+    try {
+      await fetch(GAS_PROXY, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({
+          mode: 'log_unanswered',
+          question: text,
+          answer: data.answer || ''
+        })
+      });
+    } catch(logErr) {
+      console.error('未回答ログ記録エラー', logErr);
+    }
+
     removeTyping();
     const row=document.createElement('div'); row.className='msg-row bot';
     const av=document.createElement('div'); av.className='avatar bot'; av.innerHTML='<img src="' + KOKOPELLI_ICON + '" class="avatar-img">';
