@@ -25,13 +25,19 @@ body { margin: 0; font-family: sans-serif; background: #f5f7fa; }
 .logo {
   width: 40px;
   height: 40px;
-  border-radius: 12px;
-  background: #1D9E75;
-  color: #fff;
-  font-weight: 700;
+  border-radius: 50%;
+  overflow: hidden;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .header-text .title { font-size: 16px; font-weight: 600; }
@@ -189,8 +195,18 @@ body { margin: 0; font-family: sans-serif; background: #f5f7fa; }
 }
 
 .avatar.bot {
-  background: #1D9E75;
-  color: white;
+  background: transparent;
+  color: transparent;
+  overflow: hidden;
+  padding: 0;
+}
+
+.avatar-img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
 }
 
 .avatar.user {
@@ -203,12 +219,12 @@ body { margin: 0; font-family: sans-serif; background: #f5f7fa; }
 <div id="chat-wrap">
   <header class="app-header">
   <div class="header-left">
-    <div class="logo">KB</div>
-    <div class="header-text">
-      <div class="title">社内ナレッジBot</div>
-      <div class="subtitle">マニュアル検索・業務質問に対応</div>
-    </div>
+  <div class="logo"><img src="https://raw.githubusercontent.com/kopelliko/knowledge-bot/main/kokopelli_icon.png" class="logo-img"></div>
+  <div class="header-text">
+    <div class="title">Kokopelli君</div>
+    <div class="subtitle">マニュアル検索・業務質問に対応</div>
   </div>
+</div>
 
   <div class="header-right">
     <span class="status-dot"></span>
@@ -1366,6 +1382,7 @@ const flows = {
   wip: { text: 'このナレッジは現在準備中です。\n担当部署に直接ご確認ください。', choices: [{ label: '最初に戻る', next: 'start', back: true }] }
 };
 
+const KOKOPELLI_ICON = 'https://raw.githubusercontent.com/kopelliko/knowledge-bot/main/kokopelli_icon.png';
 const LSVG = '<svg width="14" height="14" viewBox="0 0 24 24"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42L17.59 5H14V3zm-1 3H5a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-8h-2v8H5V8h8V6z"/></svg>';
 const ml = (url, label) => '<a class="manual-link" href="' + url + '" target="_blank">' + LSVG + label + '</a>';
 const canvaEmbed = (src) => src ? '<div class="canva-wrap"><iframe loading="lazy" src="' + src + '" allowfullscreen allow="fullscreen"></iframe></div><p class="canva-note">スライドをスクロールして該当ページをご確認ください</p>' : '';
@@ -1377,7 +1394,7 @@ const scrollBottom = () => messagesEl.scrollTop = messagesEl.scrollHeight;
 
 function showTyping() {
   const row=document.createElement('div'); row.className='msg-row bot'; row.id='typing-row';
-  const av=document.createElement('div'); av.className='avatar bot'; av.textContent='KB';
+  const av=document.createElement('div'); av.className='avatar bot'; av.innerHTML='<img src="' + KOKOPELLI_ICON + '" class="avatar-img">';
   const b=document.createElement('div'); b.className='bubble bot';
   b.innerHTML='<div class="typing"><span></span><span></span><span></span></div>';
   row.appendChild(av); row.appendChild(b); messagesEl.appendChild(row); scrollBottom();
@@ -1424,7 +1441,7 @@ function showFlow(key) {
   setTimeout(()=>{
     removeTyping();
     const row=document.createElement('div'); row.className='msg-row bot';
-    const av=document.createElement('div'); av.className='avatar bot'; av.textContent='KB';
+    const av=document.createElement('div'); av.className='avatar bot'; av.innerHTML='<img src="' + KOKOPELLI_ICON + '" class="avatar-img">';
     const b=document.createElement('div'); b.className='bubble bot';
     if(flow.html){
       b.innerHTML=flow.html;
@@ -1467,7 +1484,7 @@ async function handleSend() {
     conversationId = data.conversation_id || '';
     removeTyping();
     const row=document.createElement('div'); row.className='msg-row bot';
-    const av=document.createElement('div'); av.className='avatar bot'; av.textContent='KB';
+    const av=document.createElement('div'); av.className='avatar bot'; av.innerHTML='<img src="' + KOKOPELLI_ICON + '" class="avatar-img">';
     const b=document.createElement('div'); b.className='bubble bot';
     b.innerHTML = markdownToHtml(data.answer || 'エラーが発生しました。');
     const choicesEl=document.createElement('div'); choicesEl.className='choices';
